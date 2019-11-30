@@ -49,11 +49,12 @@ public class Main {
                 }
                 map.moveHero(h, move);
             }
-            for(Hero h:heroes) {
-                if(!h.isDead()) {
-                    map.findOpponent(h);
-                }
-            }
+            map.fight(i);
+//            for(Hero h:heroes) {
+//                if(!h.isDead()) {
+//                    map.findOpponent(h);
+//                }
+//            }
             for(Hero h:heroes) {
                 h.checkHp();
 //                h.printStatus();

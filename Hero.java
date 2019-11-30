@@ -50,7 +50,7 @@ public abstract class Hero implements Visitor, Visitable {
         }
     }
 
-    abstract double getLandModifier(LandType land);
+    abstract float getLandModifier(LandType land);
 
     public abstract void takeDmg(Visitor hero, LandType land);
 

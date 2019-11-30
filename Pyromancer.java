@@ -15,7 +15,7 @@ public class Pyromancer extends Hero {
     }
 
     @Override
-    public double getLandModifier(LandType land) {
+    public float getLandModifier(LandType land) {
         if(land == LandType.Volcanic) {
             return Constants.VOLCANIC_PYRO;
         }
@@ -24,52 +24,54 @@ public class Pyromancer extends Hero {
 
     @Override
     public void dealDmg(Knight hero, LandType land) {
-        double landMod = this.getLandModifier(land);
-        int fireblastDmg = (int) Math.round(this.fireblast * Constants.FIREBLAST_APPLIED_TO_KNIGHT * landMod);
-        int igniteDmg = (int) Math.round(this.ignite * Constants.IGNITE_APPLIED_TO_KNIGHT * landMod);
-        int igniteDot = (int) Math.round(this.igniteOt * Constants.IGNITE_APPLIED_TO_KNIGHT * landMod);
+        float landMod = this.getLandModifier(land);
+        int fireblastDmg = Math.round(this.fireblast * Constants.FIREBLAST_APPLIED_TO_KNIGHT * landMod);
+        int igniteDmg = Math.round(this.ignite * Constants.IGNITE_APPLIED_TO_KNIGHT * landMod);
+        int igniteDot = Math.round(this.igniteOt * Constants.IGNITE_APPLIED_TO_KNIGHT * landMod);
         hero.debuff(igniteDot, false, 2);
         hero.getHit(fireblastDmg + igniteDmg);
-        if (hero.isDead()) {
+        if (hero.getHp() <= 0) {
             this.experience += Math.max(0, 200 - (this.level - hero.getLevel()) * Constants.LEVEL_DIFF_EXP_MULTIPLIER);
         }
     }
 
     @Override
     public void dealDmg(Pyromancer hero, LandType land) {
-        double landMod = this.getLandModifier(land);
-        int fireblastDmg = (int) Math.round(this.fireblast * Constants.FIREBLAST_APPLIED_TO_PYRO * landMod);
-        int igniteDmg = (int) Math.round(this.ignite * Constants.IGNITE_APPLIED_TO_PYRO * landMod);
-        int igniteDot = (int) Math.round(this.igniteOt * Constants.IGNITE_APPLIED_TO_PYRO * landMod);
+        float landMod = this.getLandModifier(land);
+        int fireblastDmg = Math.round(this.fireblast * Constants.FIREBLAST_APPLIED_TO_PYRO * landMod);
+        int igniteDmg = Math.round(this.ignite * Constants.IGNITE_APPLIED_TO_PYRO * landMod);
+        int igniteDot = Math.round(this.igniteOt * Constants.IGNITE_APPLIED_TO_PYRO * landMod);
         hero.debuff(igniteDot, false, 2);
         hero.getHit(fireblastDmg + igniteDmg);
-        if (hero.isDead()) {
+        if (hero.getHp() <= 0) {
             this.experience += Math.max(0, 200 - (this.level - hero.getLevel()) * Constants.LEVEL_DIFF_EXP_MULTIPLIER);
         }
     }
 
     @Override
     public void dealDmg(Wizard hero, LandType land) {
-        double landMod = this.getLandModifier(land);
-        int fireblastDmg = (int) Math.round(this.fireblast * Constants.FIREBLAST_APPLIED_TO_WIZ * landMod);
-        int igniteDmg = (int) Math.round(this.ignite * Constants.IGNITE_APPLIED_TO_WIZ * landMod);
-        int igniteDot = (int) Math.round(this.igniteOt * Constants.IGNITE_APPLIED_TO_WIZ * landMod);
+        float landMod = this.getLandModifier(land);
+        int fireblastDmg = Math.round(this.fireblast * Constants.FIREBLAST_APPLIED_TO_WIZ * landMod);
+        int igniteDmg = Math.round(this.ignite * Constants.IGNITE_APPLIED_TO_WIZ * landMod);
+        int igniteDot = Math.round(this.igniteOt * Constants.IGNITE_APPLIED_TO_WIZ * landMod);
         hero.debuff(igniteDot, false, 2);
+        int dmgToDeflect = Math.round(this.fireblast * landMod) + Math.round(this.ignite * landMod);
+        hero.setDmgToDeflect(dmgToDeflect);
         hero.getHit(fireblastDmg + igniteDmg);
-        if (hero.isDead()) {
+        if (hero.getHp() <= 0) {
             this.experience += Math.max(0, 200 - (this.level - hero.getLevel()) * Constants.LEVEL_DIFF_EXP_MULTIPLIER);
         }
     }
 
     @Override
     public void dealDmg(Rogue hero, LandType land) {
-        double landMod = this.getLandModifier(land);
-        int fireblastDmg = (int) Math.round(this.fireblast * Constants.FIREBLAST_APPLIED_TO_ROGUE * landMod);
-        int igniteDmg = (int) Math.round(this.ignite * Constants.IGNITE_APPLIED_TO_ROGUE * landMod);
-        int igniteDot = (int) Math.round(this.igniteOt * Constants.IGNITE_APPLIED_TO_ROGUE * landMod);
+        float landMod = this.getLandModifier(land);
+        int fireblastDmg = Math.round(this.fireblast * Constants.FIREBLAST_APPLIED_TO_ROGUE * landMod);
+        int igniteDmg = Math.round(this.ignite * Constants.IGNITE_APPLIED_TO_ROGUE * landMod);
+        int igniteDot = Math.round(this.igniteOt * Constants.IGNITE_APPLIED_TO_ROGUE * landMod);
         hero.debuff(igniteDot, false, 2);
         hero.getHit(fireblastDmg + igniteDmg);
-        if (hero.isDead()) {
+        if (hero.getHp() <= 0) {
             this.experience += Math.max(0, 200 - (this.level - hero.getLevel()) * Constants.LEVEL_DIFF_EXP_MULTIPLIER);
         }
     }

@@ -79,6 +79,41 @@ class GameMap {
         }
     }
 
+    void fight(int round) {
+        Hero h1, h2;
+        for(int i = 0; i < this.N * this.M; i++) {
+            // Verific fiecare pozitie de pe harta si caut 2 eroi sa se lupte
+            h1 = null;
+            h2 = null;
+            for(Hero h : players_positions.keySet()) {
+                if(i == players_positions.get(h) && !h.isDead()) {
+                    if(h1 == null) {
+                        h1 = h;
+                    }
+                    else{
+                        h2 = h;
+                        break;
+                    }
+                }
+            }
+            if(h2 == null) {    // Nu s-au gasit 2 eroi
+                continue;
+            }
+            if(h1 instanceof Wizard) {  // Wizard ataca al doilea (pentru deflect)
+                Hero h3 = h1;
+                h1 = h2;
+                h2 = h3;
+            }
+            System.out.println("round = " + round);
+            System.out.print(i + " ");
+            h1.printHeroClass();
+            h2.printHeroClass();
+            System.out.println("");
+            h2.takeDmg(h1, this.map[i / this.M][i % this.M]);
+            h1.takeDmg(h2, this.map[i / this.M][i % this.M]);
+        }
+    }
+
     void findOpponent(Hero hero) {
         int heroPos = players_positions.get(hero);
         for(Map.Entry<Hero, Integer> entry : players_positions.entrySet()) {
