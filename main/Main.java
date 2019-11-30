@@ -10,31 +10,15 @@ public class Main {
         FileReader fileReader = new FileReader(file_name);
         int N = fileReader.nextInt();
         int M = fileReader.nextInt();
-        GameMap map = new GameMap(M, N, fileReader);
-        map.print();
+        GameMap map = GameMap.getInstance(M, N, fileReader);
         ArrayList<Hero> heroes = new ArrayList<>();
         int no_heroes = fileReader.nextInt();
         Hero hero;
         int x, y;
+        HeroesFactory heroesFactory = HeroesFactory.getInstance();
         for(int i = 0; i < no_heroes; i++) {
             String type = fileReader.nextWord();
-            switch (type.charAt(0)) {
-                case 'W':
-                    hero = new Wizard();
-                    break;
-                case 'P':
-                    hero = new Pyromancer();
-                    break;
-                case 'K':
-                    hero = new Knight();
-                    break;
-                case 'R':
-                    hero = new Rogue();
-                    break;
-                default:
-                    hero = null;
-                    break;
-            }
+            hero = heroesFactory.getHeroByChar(type.charAt(0));
             heroes.add(hero);
             x = fileReader.nextInt();
             y = fileReader.nextInt();
@@ -49,26 +33,45 @@ public class Main {
             -move if not immobilized or dead
             -fight
              */
+            for(Hero h:heroes) {
+                if(!h.isDead()){
+                    h.applyDebuff();
+                    h.checkHp();
+                }
+            }
             moves = fileReader.nextWord();
             int j = 0;
             char move;
             for(Hero h:heroes) {
                 move = moves.charAt(j++);
-                if(h.isRooted()) {
+                if(h.isRooted() || h.isDead()) {
                     continue;
                 }
                 map.moveHero(h, move);
             }
+            map.fight(i);
+//            for(Hero h:heroes) {
+//                if(!h.isDead()) {
+//                    map.findOpponent(h);
+//                }
+//            }
             for(Hero h:heroes) {
-                map.findOpponent(h);
-            }
-            for(Hero h:heroes) {
+                h.checkHp();
+//                h.printStatus();
+//                map.printPos(h);
                 h.levelUp();
             }
+
         }
         for(Hero h:heroes) {
-            h.printStatus();
-            map.printPos(h);
+            h.printHeroClass();
+            if(h.getHp() > 0){
+                h.printStatus();
+                map.printPos(h);
+                continue;
+            }
+            System.out.println("dead");
         }
+        System.out.println("");
     }
 }

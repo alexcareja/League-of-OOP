@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 class GameMap {
+    private static GameMap instance = null;
     private int N;
     private int M;
     private LandType[][] map;
@@ -15,7 +16,7 @@ class GameMap {
     * has the position (x, y), then his position will be represented as x*M +  y.
     * */
 
-    GameMap(int N, int M, FileReader fileReader) throws IOException {
+    private GameMap(int N, int M, FileReader fileReader) throws IOException {
         this.N = N;
         this.M = M;
         this.map = new LandType[N][M];
@@ -41,6 +42,13 @@ class GameMap {
             }
         }
         this.players_positions = new HashMap<>();
+    }
+
+    static GameMap getInstance(int N, int M, FileReader fileReader) throws IOException {
+        if(instance == null) {
+            instance = new GameMap(N, M, fileReader);
+        }
+        return instance;
     }
 
     LandType getTerrain(int i, int j) {
@@ -71,10 +79,40 @@ class GameMap {
         }
     }
 
+    void fight(int round) {
+        Hero h1, h2;
+        for(int i = 0; i < this.N * this.M; i++) {
+            // Verific fiecare pozitie de pe harta si caut 2 eroi sa se lupte
+            h1 = null;
+            h2 = null;
+            for(Hero h : players_positions.keySet()) {
+                if(i == players_positions.get(h) && !h.isDead()) {
+                    if(h1 == null) {
+                        h1 = h;
+                    }
+                    else{
+                        h2 = h;
+                        break;
+                    }
+                }
+            }
+            if(h2 == null) {    // Nu s-au gasit 2 eroi
+                continue;
+            }
+            if(h1 instanceof Wizard) {  // Wizard ataca al doilea (pentru deflect)
+                Hero h3 = h1;
+                h1 = h2;
+                h2 = h3;
+            }
+            h2.takeDmg(h1, this.map[i / this.M][i % this.M]);
+            h1.takeDmg(h2, this.map[i / this.M][i % this.M]);
+        }
+    }
+
     void findOpponent(Hero hero) {
         int heroPos = players_positions.get(hero);
         for(Map.Entry<Hero, Integer> entry : players_positions.entrySet()) {
-            if(entry.getKey() == hero) {
+            if(entry.getKey() == hero || entry.getKey().isDead()) {
                 continue;
             }
             if(entry.getValue() == heroPos) {
