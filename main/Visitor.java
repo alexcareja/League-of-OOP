@@ -1,8 +1,8 @@
 package main;
 
 public interface Visitor {
-    void visit(Knight hero);
-    void visit(Pyromancer hero);
-    void visit(Wizard hero);
-    void visit(Rogue hero);
+    void dealDmg(Knight hero, LandType land);
+    void dealDmg(Pyromancer hero, LandType land);
+    void dealDmg(Wizard hero, LandType land);
+    void dealDmg(Rogue hero, LandType land);
 }

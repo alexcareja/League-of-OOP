@@ -1,5 +1,5 @@
 package main;
 
 public interface Visitable {
-    void accept(Visitor v);
+    void takeDmg(Visitor v, LandType land);
 }

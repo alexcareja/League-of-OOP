@@ -8,28 +8,84 @@ import java.util.Map;
 class GameMap {
     private int N;
     private int M;
-    private char[][] map;
-    private Map<Hero, Position> players_positions;
+    private LandType[][] map;
+    private Map<Hero, Integer> players_positions;
+    /*
+    * Player positions will be represented using an Integer like this: let's say a player
+    * has the position (x, y), then his position will be represented as x*M +  y.
+    * */
 
     GameMap(int N, int M, FileReader fileReader) throws IOException {
         this.N = N;
         this.M = M;
-        this.map = new char[N][M];
+        this.map = new LandType[N][M];
         for(int i = 0; i < N; i++) {
             String line = fileReader.nextWord();
             for(int j = 0; j < M; j++) {
-                this.map[i][j] = line.charAt(j);
+                switch (line.charAt(j)) {
+                    case 'D':
+                        this.map[i][j] = LandType.Desert;
+                        break;
+                    case 'L':
+                        this.map[i][j] = LandType.Land;
+                        break;
+                    case 'V':
+                        this.map[i][j] = LandType.Volcanic;
+                        break;
+                    case 'W':
+                        this.map[i][j] = LandType.Woods;
+                        break;
+                    default:
+                        break;
+                }
             }
         }
         this.players_positions = new HashMap<>();
     }
 
-    char getTerrain(int i, int j) {
+    LandType getTerrain(int i, int j) {
         return this.map[i][j];
     }
 
     void placeHero(Hero hero, int x, int y) {
-        players_positions.put(hero, new Position(x, y));
+        players_positions.put(hero, x * this.M + y);
+    }
+
+    void moveHero(Hero h, char move) {
+        int currentPosition = players_positions.get(h);
+        switch (move) {
+            case 'R':
+                players_positions.put(h, currentPosition + 1);
+                break;
+            case 'L':
+                players_positions.put(h, currentPosition - 1);
+                break;
+            case 'U':
+                players_positions.put(h, currentPosition - this.M);
+                break;
+            case 'D':
+                players_positions.put(h, currentPosition + this.M);
+                break;
+            default:
+                break;
+        }
+    }
+
+    void findOpponent(Hero hero) {
+        int heroPos = players_positions.get(hero);
+        for(Map.Entry<Hero, Integer> entry : players_positions.entrySet()) {
+            if(entry.getKey() == hero) {
+                continue;
+            }
+            if(entry.getValue() == heroPos) {
+                entry.getKey().takeDmg(hero, this.map[heroPos / this.M][heroPos % this.M]);
+            }
+        }
+    }
+
+    void printPos(Hero h) {
+        int heroPos = players_positions.get(h);
+        System.out.println(heroPos / this.M + " " + heroPos % this.M);
     }
 
     void print() {

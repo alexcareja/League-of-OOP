@@ -1,6 +1,9 @@
 package main;
 
 public class Constants {
+    static final int LEVEL_ONE_EXPERIENCE = 250;
+    static final int EXPERIENCE_PER_LEVEL = 50;
+    static final int LEVEL_DIFF_EXP_MULTIPLIER = 40;
     // Pyromancer abilities modifiers
     static final double FIREBLAST_APPLIED_TO_ROGUE = 0.8;
     static final double FIREBLAST_APPLIED_TO_KNIGHT = 1.2;
@@ -42,21 +45,24 @@ public class Constants {
     static final double LAND_KNIGHT = 1.15;
     static final double DESERT_WIZ = 1.10;
     static final double WOODS_ROGUE = 1.15;
-    // Pyromancer level up constants
+    // Pyromancer constants
     static final int PYRO_HP_GROWTH = 50;
     static final int FIREBLAST_DMG_PER_LEVEL = 50;
     static final int IGNITE_FLAT_DMG_PER_LEVEL = 20;
     static final int IGNITE_OT_DMG_PER_LEVEL = 30;
-    // Knight level up constants
+    // Knight constants
+    static final int KNIGHT_INIT_HP = 900;
+    static final int EXECUTE_FLAT_DMG = 200;
+    static final int SLAM_FLAT_DMG = 100;
     static final int KNIGHT_HP_GROWTH = 80;
     static final int EXECUTE_DMG_PER_LEVEL = 30;
     static final double EXECUTE_PERCENT_PER_LEVEL = 0.01;
     static final int SLAM_DMG_PER_LEVEL = 40;
-    // Wizard level up constants
+    // Wizard constants
     static final int WIZ_HP_GROWTH = 30;
     static final double DRAIN_PERCENT_PER_LEVEL = 0.05;
     static final double DEFLECT_PERCENT_PER_LEVEL = 0.02;
-    // Rogue level up constants
+    // Rogue constants
     static final int ROGUE_HP_GROWTH = 40;
     static final int BACKSTAB_DMG_PER_LEVEL = 20;
     static final int PARALYSIS_DMG_PER_LEVEL = 10;

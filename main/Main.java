@@ -41,6 +41,7 @@ public class Main {
             map.placeHero(hero, x, y);
         }
         int no_rounds = fileReader.nextInt();
+        String moves;
         for(int i = 0; i < no_rounds; i++){
             /*TODO
             -take dmg from previous rounds
@@ -48,6 +49,26 @@ public class Main {
             -move if not immobilized or dead
             -fight
              */
+            moves = fileReader.nextWord();
+            int j = 0;
+            char move;
+            for(Hero h:heroes) {
+                move = moves.charAt(j++);
+                if(h.isRooted()) {
+                    continue;
+                }
+                map.moveHero(h, move);
+            }
+            for(Hero h:heroes) {
+                map.findOpponent(h);
+            }
+            for(Hero h:heroes) {
+                h.levelUp();
+            }
+        }
+        for(Hero h:heroes) {
+            h.printStatus();
+            map.printPos(h);
         }
     }
 }
