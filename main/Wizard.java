@@ -17,6 +17,16 @@ public class Wizard extends Hero {
     }
 
     @Override
+    void applyDebuff() {
+        if (this.debuffDuration == 0) {
+            this.isRooted = false;
+            return;
+        }
+        this.debuffDuration --;
+        this.getHit(debuffDamage);
+    }
+
+    @Override
     public float getLandModifier(LandType land) {
         if(land == LandType.Desert) {
             return Constants.DESERT_WIZ;
@@ -29,7 +39,7 @@ public class Wizard extends Hero {
         int heroMaxHp = Constants.KNIGHT_INIT_HP + hero.getLevel() * Constants.KNIGHT_HP_GROWTH;
         float landMod = this.getLandModifier(land);
         int drainDmg = Math.round(this.drain * Math.min(0.3f * heroMaxHp, hero.getHp()) * landMod * Constants.DRAIN_APPLIED_TO_KNIGHT);
-        int deflectDmg = Math.round(this.deflectFlatDmg * this.deflect * Constants.DEFLECT_APPLIED_TO_KNIGHT);
+        int deflectDmg = Math.round(this.deflectFlatDmg * this.deflect * Constants.DEFLECT_APPLIED_TO_KNIGHT * landMod);
         hero.getHit(drainDmg + deflectDmg);
         if (hero.getHp() <= 0) {
             this.experience += Math.max(0, 200 - (this.level - hero.getLevel()) * Constants.LEVEL_DIFF_EXP_MULTIPLIER);
@@ -42,7 +52,7 @@ public class Wizard extends Hero {
         int heroMaxHp = Constants.PYRO_INIT_HP + hero.getLevel() * Constants.PYRO_HP_GROWTH;
         float landMod = this.getLandModifier(land);
         int drainDmg = Math.round(this.drain * Math.min(0.3f * heroMaxHp, hero.getHp()) * landMod * Constants.DRAIN_APPLIED_TO_PYRO);
-        int deflectDmg = Math.round(this.deflectFlatDmg * this.deflect * Constants.DEFLECT_APPLIED_TO_PYRO);
+        int deflectDmg = Math.round(this.deflectFlatDmg * this.deflect * Constants.DEFLECT_APPLIED_TO_PYRO * landMod);
         hero.getHit(drainDmg + deflectDmg);
         if (hero.getHp() <= 0) {
             this.experience += Math.max(0, 200 - (this.level - hero.getLevel()) * Constants.LEVEL_DIFF_EXP_MULTIPLIER);
@@ -67,7 +77,7 @@ public class Wizard extends Hero {
         int heroMaxHp = Constants.ROGUE_INIT_HP + hero.getLevel() * Constants.ROGUE_HP_GROWTH;
         float landMod = this.getLandModifier(land);
         int drainDmg = Math.round(this.drain * Math.min(0.3f * heroMaxHp, hero.getHp()) * landMod * Constants.DRAIN_APPLIED_TO_ROGUE);
-        int deflectDmg = Math.round(this.deflectFlatDmg * this.deflect * Constants.DEFLECT_APPLIED_TO_ROGUE);
+        int deflectDmg = Math.round(this.deflectFlatDmg * this.deflect * Constants.DEFLECT_APPLIED_TO_ROGUE * landMod);
         hero.getHit(drainDmg + deflectDmg);
         if (hero.getHp() <= 0) {
             this.experience += Math.max(0, 200 - (this.level - hero.getLevel()) * Constants.LEVEL_DIFF_EXP_MULTIPLIER);
@@ -82,8 +92,11 @@ public class Wizard extends Hero {
 
     @Override
     void levelUp() {
+        if(this.isDead()) {
+            return;
+        }
         int i = 0;
-        while(this.experience > Constants.LEVEL_ONE_EXPERIENCE + i * Constants.EXPERIENCE_PER_LEVEL) {
+        while(this.experience >= Constants.LEVEL_ONE_EXPERIENCE + i * Constants.EXPERIENCE_PER_LEVEL) {
             i++;
         }
         if(i > this.level) {

@@ -32,6 +32,7 @@ public class Knight extends Hero {
         float landMod = this.getLandModifier(land);
         int executeDmg = Math.round(this.execute * Constants.EXECUTE_APPLIED_TO_KNIGHT * landMod);
         int slamDmg = Math.round(this.slam * Constants.SLAM_APPLIED_TO_KNIGHT * landMod);
+        hero.debuff(0, true, 1);
         hero.getHit(executeDmg + slamDmg);
         if (hero.getHp() <= 0) {
             this.experience += Math.max(0, 200 - (this.level - hero.getLevel()) * Constants.LEVEL_DIFF_EXP_MULTIPLIER);
@@ -50,6 +51,7 @@ public class Knight extends Hero {
         float landMod = this.getLandModifier(land);
         int executeDmg = Math.round(this.execute * Constants.EXECUTE_APPLIED_TO_PYRO * landMod);
         int slamDmg = Math.round(this.slam * Constants.SLAM_APPLIED_TO_PYRO * landMod);
+        hero.debuff(0, true, 1);
         hero.getHit(executeDmg + slamDmg);
         if (hero.getHp() <= 0) {
             this.experience += Math.max(0, 200 - (this.level - hero.getLevel()) * Constants.LEVEL_DIFF_EXP_MULTIPLIER);
@@ -71,6 +73,7 @@ public class Knight extends Hero {
         int slamDmg = Math.round(this.slam * Constants.SLAM_APPLIED_TO_WIZ * landMod);
         int dmgToDeflect = Math.round(this.execute * landMod) + Math.round(this.slam * landMod);
         hero.setDmgToDeflect(dmgToDeflect);
+        hero.debuff(0, true, 1);
         hero.getHit(executeDmg + slamDmg);
         if (hero.getHp() <= 0) {
             this.experience += Math.max(0, 200 - (this.level - hero.getLevel()) * Constants.LEVEL_DIFF_EXP_MULTIPLIER);
@@ -90,6 +93,7 @@ public class Knight extends Hero {
         int executeDmg = Math.round(this.execute * Constants.EXECUTE_APPLIED_TO_ROGUE * landMod);
         int slamDmg = Math.round(this.slam * Constants.SLAM_APPLIED_TO_ROGUE * landMod);
         hero.getHit(executeDmg + slamDmg);
+        hero.debuff(0, true, 1);
         if (hero.getHp() <= 0) {
             this.experience += Math.max(0, 200 - (this.level - hero.getLevel()) * Constants.LEVEL_DIFF_EXP_MULTIPLIER);
         }
@@ -102,8 +106,11 @@ public class Knight extends Hero {
 
     @Override
     void levelUp() {
+        if(this.isDead()) {
+            return;
+        }
         int i = 0;
-        while(this.experience > Constants.LEVEL_ONE_EXPERIENCE + i * Constants.EXPERIENCE_PER_LEVEL) {
+        while(this.experience >= Constants.LEVEL_ONE_EXPERIENCE + i * Constants.EXPERIENCE_PER_LEVEL) {
             i++;
         }
         if(i > this.level) {

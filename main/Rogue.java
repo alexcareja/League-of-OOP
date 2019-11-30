@@ -9,6 +9,7 @@ public class Rogue extends Hero {
         this.hp = Constants.ROGUE_INIT_HP;
         this.backstab = Constants.BACKSTAB_FLAT_DMG;
         this.paralysis = Constants.PARALYSIS_FLAT_DMG;
+        this.backstabCount = 0;
     }
 
     @Override
@@ -21,7 +22,6 @@ public class Rogue extends Hero {
 
     @Override
     public void dealDmg(Knight hero, LandType land) {
-        backstabCount++;
         int duration = Constants.PARALYSIS_DURATION;
         float backstabCrit = 1f;
         if(land == LandType.Woods) {
@@ -38,11 +38,11 @@ public class Rogue extends Hero {
         if (hero.getHp() <= 0) {
             this.experience += Math.max(0, 200 - (this.level - hero.getLevel()) * Constants.LEVEL_DIFF_EXP_MULTIPLIER);
         }
+        backstabCount++;
     }
 
     @Override
     public void dealDmg(Pyromancer hero, LandType land) {
-        backstabCount++;
         int duration = Constants.PARALYSIS_DURATION;
         float backstabCrit = 1;
         if(land == LandType.Woods) {
@@ -59,11 +59,11 @@ public class Rogue extends Hero {
         if (hero.getHp() <= 0) {
             this.experience += Math.max(0, 200 - (this.level - hero.getLevel()) * Constants.LEVEL_DIFF_EXP_MULTIPLIER);
         }
+        backstabCount++;
     }
 
     @Override
     public void dealDmg(Wizard hero, LandType land) {
-        backstabCount++;
         int duration = Constants.PARALYSIS_DURATION;
         float backstabCrit = 1;
         if(land == LandType.Woods) {
@@ -75,18 +75,18 @@ public class Rogue extends Hero {
         float landMod = this.getLandModifier(land);
         int backstabDmg = Math.round(this.backstab * Constants.BACKSTAB_APPLIED_TO_WIZ * landMod * backstabCrit);
         int paralysisDmg = Math.round(this.paralysis * Constants.PARALYSIS_APPLIED_TO_WIZ * landMod);
-        int dmgToDeflect = Math.round(this.backstab * landMod) + Math.round(this.paralysis * landMod);
+        int dmgToDeflect = Math.round(this.backstab * landMod * backstabCrit) + Math.round(this.paralysis * landMod);
         hero.setDmgToDeflect(dmgToDeflect);
         hero.debuff(paralysisDmg, true, duration);
         hero.getHit(backstabDmg + paralysisDmg);
         if (hero.getHp() <= 0) {
             this.experience += Math.max(0, 200 - (this.level - hero.getLevel()) * Constants.LEVEL_DIFF_EXP_MULTIPLIER);
         }
+        backstabCount++;
     }
 
     @Override
     public void dealDmg(Rogue hero, LandType land) {
-        backstabCount++;
         int duration = Constants.PARALYSIS_DURATION;
         float backstabCrit = 1;
         if(land == LandType.Woods) {
@@ -103,6 +103,7 @@ public class Rogue extends Hero {
         if (hero.getHp() <= 0) {
             this.experience += Math.max(0, 200 - (this.level - hero.getLevel()) * Constants.LEVEL_DIFF_EXP_MULTIPLIER);
         }
+        backstabCount++;
     }
 
     @Override
@@ -112,8 +113,11 @@ public class Rogue extends Hero {
 
     @Override
     void levelUp() {
+        if(this.isDead()) {
+            return;
+        }
         int i = 0;
-        while(this.experience > Constants.LEVEL_ONE_EXPERIENCE + i * Constants.EXPERIENCE_PER_LEVEL) {
+        while(this.experience >= Constants.LEVEL_ONE_EXPERIENCE + i * Constants.EXPERIENCE_PER_LEVEL) {
             i++;
         }
         if(i > this.level) {
@@ -128,5 +132,4 @@ public class Rogue extends Hero {
     void printHeroClass() {
         System.out.print("R ");
     }
-
 }

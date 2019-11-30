@@ -28,7 +28,7 @@ public class Pyromancer extends Hero {
         int fireblastDmg = Math.round(this.fireblast * Constants.FIREBLAST_APPLIED_TO_KNIGHT * landMod);
         int igniteDmg = Math.round(this.ignite * Constants.IGNITE_APPLIED_TO_KNIGHT * landMod);
         int igniteDot = Math.round(this.igniteOt * Constants.IGNITE_APPLIED_TO_KNIGHT * landMod);
-        hero.debuff(igniteDot, false, 2);
+        hero.debuff(igniteDot, false, igniteDuration);
         hero.getHit(fireblastDmg + igniteDmg);
         if (hero.getHp() <= 0) {
             this.experience += Math.max(0, 200 - (this.level - hero.getLevel()) * Constants.LEVEL_DIFF_EXP_MULTIPLIER);
@@ -41,7 +41,7 @@ public class Pyromancer extends Hero {
         int fireblastDmg = Math.round(this.fireblast * Constants.FIREBLAST_APPLIED_TO_PYRO * landMod);
         int igniteDmg = Math.round(this.ignite * Constants.IGNITE_APPLIED_TO_PYRO * landMod);
         int igniteDot = Math.round(this.igniteOt * Constants.IGNITE_APPLIED_TO_PYRO * landMod);
-        hero.debuff(igniteDot, false, 2);
+        hero.debuff(igniteDot, false, igniteDuration);
         hero.getHit(fireblastDmg + igniteDmg);
         if (hero.getHp() <= 0) {
             this.experience += Math.max(0, 200 - (this.level - hero.getLevel()) * Constants.LEVEL_DIFF_EXP_MULTIPLIER);
@@ -54,7 +54,7 @@ public class Pyromancer extends Hero {
         int fireblastDmg = Math.round(this.fireblast * Constants.FIREBLAST_APPLIED_TO_WIZ * landMod);
         int igniteDmg = Math.round(this.ignite * Constants.IGNITE_APPLIED_TO_WIZ * landMod);
         int igniteDot = Math.round(this.igniteOt * Constants.IGNITE_APPLIED_TO_WIZ * landMod);
-        hero.debuff(igniteDot, false, 2);
+        hero.debuff(igniteDot, false, igniteDuration);
         int dmgToDeflect = Math.round(this.fireblast * landMod) + Math.round(this.ignite * landMod);
         hero.setDmgToDeflect(dmgToDeflect);
         hero.getHit(fireblastDmg + igniteDmg);
@@ -69,7 +69,7 @@ public class Pyromancer extends Hero {
         int fireblastDmg = Math.round(this.fireblast * Constants.FIREBLAST_APPLIED_TO_ROGUE * landMod);
         int igniteDmg = Math.round(this.ignite * Constants.IGNITE_APPLIED_TO_ROGUE * landMod);
         int igniteDot = Math.round(this.igniteOt * Constants.IGNITE_APPLIED_TO_ROGUE * landMod);
-        hero.debuff(igniteDot, false, 2);
+        hero.debuff(igniteDot, false, igniteDuration);
         hero.getHit(fireblastDmg + igniteDmg);
         if (hero.getHp() <= 0) {
             this.experience += Math.max(0, 200 - (this.level - hero.getLevel()) * Constants.LEVEL_DIFF_EXP_MULTIPLIER);
@@ -83,8 +83,11 @@ public class Pyromancer extends Hero {
 
     @Override
     void levelUp() {
+        if(this.isDead()) {
+            return;
+        }
         int i = 0;
-        while(this.experience > Constants.LEVEL_ONE_EXPERIENCE + i * Constants.EXPERIENCE_PER_LEVEL) {
+        while(this.experience >= Constants.LEVEL_ONE_EXPERIENCE + i * Constants.EXPERIENCE_PER_LEVEL) {
             i++;
         }
         if(i > this.level) {
@@ -100,6 +103,5 @@ public class Pyromancer extends Hero {
     void printHeroClass() {
         System.out.print("P ");
     }
-
 
 }

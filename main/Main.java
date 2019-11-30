@@ -49,16 +49,10 @@ public class Main {
                 }
                 map.moveHero(h, move);
             }
-            map.fight(i);
-//            for(Hero h:heroes) {
-//                if(!h.isDead()) {
-//                    map.findOpponent(h);
-//                }
-//            }
+            map.fight();
+
             for(Hero h:heroes) {
                 h.checkHp();
-//                h.printStatus();
-//                map.printPos(h);
                 h.levelUp();
             }
 
@@ -72,6 +66,5 @@ public class Main {
             }
             System.out.println("dead");
         }
-        System.out.println("");
     }
 }

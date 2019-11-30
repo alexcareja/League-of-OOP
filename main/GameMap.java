@@ -79,7 +79,7 @@ class GameMap {
         }
     }
 
-    void fight(int round) {
+    void fight() {
         Hero h1, h2;
         for(int i = 0; i < this.N * this.M; i++) {
             // Verific fiecare pozitie de pe harta si caut 2 eroi sa se lupte
