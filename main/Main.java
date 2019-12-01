@@ -1,6 +1,10 @@
 package main;
 
 import fileio.FileSystem;
+import heroes.Hero;
+import Utils.HeroesFactory;
+import map.GameMap;
+
 import java.io.IOException;
 import java.util.ArrayList;
 
