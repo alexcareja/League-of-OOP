@@ -15,82 +15,102 @@ public class Pyromancer extends Hero {
     }
 
     @Override
-    public float getLandModifier(LandType land) {
-        if(land == LandType.Volcanic) {
+    public final float getLandModifier(final LandType land) {
+        if (land == LandType.Volcanic) {
             return Constants.VOLCANIC_PYRO;
         }
         return 1;
     }
 
     @Override
-    public void dealDmg(Knight hero, LandType land) {
+    public final void dealDmg(final Knight hero, final LandType land) {
         float landMod = this.getLandModifier(land);
-        int fireblastDmg = Math.round(this.fireblast * Constants.FIREBLAST_APPLIED_TO_KNIGHT * landMod);
+        int fireblastDmg = Math.round(this.fireblast
+                * Constants.FIREBLAST_APPLIED_TO_KNIGHT * landMod);
         int igniteDmg = Math.round(this.ignite * Constants.IGNITE_APPLIED_TO_KNIGHT * landMod);
         int igniteDot = Math.round(this.igniteOt * Constants.IGNITE_APPLIED_TO_KNIGHT * landMod);
+        // Aplic damage overtime
         hero.debuff(igniteDot, false, igniteDuration);
+        // Aplic damage catre target (hero)
         hero.getHit(fireblastDmg + igniteDmg);
-        if (hero.getHp() <= 0) {
-            this.experience += Math.max(0, 200 - (this.level - hero.getLevel()) * Constants.LEVEL_DIFF_EXP_MULTIPLIER);
+        if (hero.getHp() <= 0) {    // Verific daca a facut kill
+            this.experience += Math.max(0, Constants.WIN_EXPERIENCE
+                    - (this.level - hero.getLevel()) * Constants.LEVEL_DIFF_EXP_MULTIPLIER);
         }
     }
 
     @Override
-    public void dealDmg(Pyromancer hero, LandType land) {
+    public final void dealDmg(final Pyromancer hero, final LandType land) {
         float landMod = this.getLandModifier(land);
-        int fireblastDmg = Math.round(this.fireblast * Constants.FIREBLAST_APPLIED_TO_PYRO * landMod);
+        int fireblastDmg = Math.round(this.fireblast
+                * Constants.FIREBLAST_APPLIED_TO_PYRO * landMod);
         int igniteDmg = Math.round(this.ignite * Constants.IGNITE_APPLIED_TO_PYRO * landMod);
         int igniteDot = Math.round(this.igniteOt * Constants.IGNITE_APPLIED_TO_PYRO * landMod);
+        // Aplic damage overtime
         hero.debuff(igniteDot, false, igniteDuration);
+        // Aplic damage catre target (hero)
         hero.getHit(fireblastDmg + igniteDmg);
-        if (hero.getHp() <= 0) {
-            this.experience += Math.max(0, 200 - (this.level - hero.getLevel()) * Constants.LEVEL_DIFF_EXP_MULTIPLIER);
+        if (hero.getHp() <= 0) {    // Verific daca a facut kill
+            this.experience += Math.max(0, Constants.WIN_EXPERIENCE
+                    - (this.level - hero.getLevel()) * Constants.LEVEL_DIFF_EXP_MULTIPLIER);
         }
     }
 
     @Override
-    public void dealDmg(Wizard hero, LandType land) {
+    public final void dealDmg(final Wizard hero, final LandType land) {
         float landMod = this.getLandModifier(land);
-        int fireblastDmg = Math.round(this.fireblast * Constants.FIREBLAST_APPLIED_TO_WIZ * landMod);
+        int fireblastDmg = Math.round(this.fireblast
+                * Constants.FIREBLAST_APPLIED_TO_WIZ * landMod);
         int igniteDmg = Math.round(this.ignite * Constants.IGNITE_APPLIED_TO_WIZ * landMod);
         int igniteDot = Math.round(this.igniteOt * Constants.IGNITE_APPLIED_TO_WIZ * landMod);
+        // Aplic damage overtime
         hero.debuff(igniteDot, false, igniteDuration);
-        int dmgToDeflect = Math.round(this.fireblast * landMod) + Math.round(this.ignite * landMod);
+        int dmgToDeflect = Math.round(this.fireblast * landMod)
+                + Math.round(this.ignite * landMod);
+        // Setez damage-ul dat de erou catre wizard fara modificatorii de rasa (pentru deflect)
         hero.setDmgToDeflect(dmgToDeflect);
+        // Aplic damage catre target (hero)
         hero.getHit(fireblastDmg + igniteDmg);
-        if (hero.getHp() <= 0) {
-            this.experience += Math.max(0, 200 - (this.level - hero.getLevel()) * Constants.LEVEL_DIFF_EXP_MULTIPLIER);
+        if (hero.getHp() <= 0) {    // Verific daca a facut kill
+            this.experience += Math.max(0, Constants.WIN_EXPERIENCE
+                    - (this.level - hero.getLevel()) * Constants.LEVEL_DIFF_EXP_MULTIPLIER);
         }
     }
 
     @Override
-    public void dealDmg(Rogue hero, LandType land) {
+    public final void dealDmg(final Rogue hero, final LandType land) {
         float landMod = this.getLandModifier(land);
-        int fireblastDmg = Math.round(this.fireblast * Constants.FIREBLAST_APPLIED_TO_ROGUE * landMod);
+        int fireblastDmg = Math.round(this.fireblast
+                * Constants.FIREBLAST_APPLIED_TO_ROGUE * landMod);
         int igniteDmg = Math.round(this.ignite * Constants.IGNITE_APPLIED_TO_ROGUE * landMod);
         int igniteDot = Math.round(this.igniteOt * Constants.IGNITE_APPLIED_TO_ROGUE * landMod);
+        // Aplic damage overtime
         hero.debuff(igniteDot, false, igniteDuration);
+        // Aplic damage catre target (hero)
         hero.getHit(fireblastDmg + igniteDmg);
-        if (hero.getHp() <= 0) {
-            this.experience += Math.max(0, 200 - (this.level - hero.getLevel()) * Constants.LEVEL_DIFF_EXP_MULTIPLIER);
+        if (hero.getHp() <= 0) {    // Verific daca a facut kill
+            this.experience += Math.max(0, Constants.WIN_EXPERIENCE
+                    - (this.level - hero.getLevel()) * Constants.LEVEL_DIFF_EXP_MULTIPLIER);
         }
     }
 
     @Override
-    public void takeDmg(Visitor v, LandType land) {
+    public final void takeDmg(final Visitor v, final LandType land) {
         v.dealDmg(this, land);
     }
 
     @Override
-    void levelUp() {
-        if(this.isDead()) {
+    final void levelUp() {
+        if (this.isDead()) {
             return;
         }
         int i = 0;
-        while(this.experience >= Constants.LEVEL_ONE_EXPERIENCE + i * Constants.EXPERIENCE_PER_LEVEL) {
+        while (this.experience >= Constants.LEVEL_ONE_EXPERIENCE
+                + i * Constants.EXPERIENCE_PER_LEVEL) {
             i++;
         }
-        if(i > this.level) {
+        if (i > this.level) {
+            // Creste damage-ul si viata proportional cu nivelul si intoarce eroul la full hp
             this.level = i;
             this.hp = Constants.PYRO_INIT_HP + i * Constants.PYRO_HP_GROWTH;
             this.fireblast = Constants.FIREBLAST_FLAT_DMG + i * Constants.FIREBLAST_DMG_PER_LEVEL;
@@ -100,8 +120,8 @@ public class Pyromancer extends Hero {
     }
 
     @Override
-    void printHeroClass() {
-        System.out.print("P ");
+    final String getHeroClass() {
+        return "P ";
     }
 
 }

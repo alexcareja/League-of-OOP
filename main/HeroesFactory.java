@@ -1,8 +1,5 @@
 package main;
 
-import java.util.HashMap;
-import java.util.Map;
-
 final class HeroesFactory {
     private static HeroesFactory instance = null;
 
@@ -10,14 +7,13 @@ final class HeroesFactory {
     }
 
     static HeroesFactory getInstance() {
-        if(instance == null) {
+        if (instance == null) { // Singleton pattern
             instance = new HeroesFactory();
         }
         return instance;
     }
 
-    Hero getHeroByChar(char c) {
-
+    Hero getHeroByChar(final char c) {
         switch (c) {
             case 'W':
                 return new Wizard();

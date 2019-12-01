@@ -4,20 +4,26 @@ import fileio.FileSystem;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class Main {
-    public static void main(String[] args) throws IOException {
-        String in_name = args[0];
-        String out_name = args[1];
-        FileSystem fileSystem = new FileSystem(in_name, out_name);
-        int N = fileSystem.nextInt();
-        int M = fileSystem.nextInt();
-        GameMap map = GameMap.getInstance(M, N, fileSystem);
+public final class Main {
+
+    private Main() {
+    }
+
+    public static void main(final String[] args) throws IOException {
+        String inFile = args[0];
+        String outFile = args[1];
+        FileSystem fileSystem = new FileSystem(inFile, outFile);
+        // Citirea din fisier
+        int n = fileSystem.nextInt();
+        int m = fileSystem.nextInt();
+        GameMap map = GameMap.getInstance(m, n, fileSystem);
         ArrayList<Hero> heroes = new ArrayList<>();
-        int no_heroes = fileSystem.nextInt();
+        int noHeroes = fileSystem.nextInt();
         Hero hero;
         int x, y;
         HeroesFactory heroesFactory = HeroesFactory.getInstance();
-        for(int i = 0; i < no_heroes; i++) {
+        // Generarea eroilor
+        for (int i = 0; i < noHeroes; i++) {
             String type = fileSystem.nextWord();
             hero = heroesFactory.getHeroByChar(type.charAt(0));
             heroes.add(hero);
@@ -25,35 +31,41 @@ public class Main {
             y = fileSystem.nextInt();
             map.placeHero(hero, x, y);
         }
-        int no_rounds = fileSystem.nextInt();
+        int noRounds = fileSystem.nextInt();
         String moves;
-        for(int i = 0; i < no_rounds; i++){
-            for(Hero h:heroes) {
-                if(!h.isDead()){
+        // Desfasurarea jocului
+        for (int i = 0; i < noRounds; i++) {
+            for (Hero h : heroes) {
+                // Aplic damage overtime din runda trecuta daca exista
+                if (!h.isDead()) {
                     h.applyDebuff();
                     h.checkHp();
                 }
             }
+            // Citeste mutarile
             moves = fileSystem.nextWord();
             int j = 0;
             char move;
-            for(Hero h:heroes) {
+            for (Hero h : heroes) {
+                // Muta eroul daca nu este imobilizat
                 move = moves.charAt(j++);
-                if(h.isRooted() || h.isDead()) {
+                if (h.isRooted() || h.isDead()) {
                     continue;
                 }
                 map.moveHero(h, move);
             }
+            // Desfasurarea luptelor din runa curenta
             map.fight();
-
-            for(Hero h:heroes) {
+            // Verfica daca a murit cineva si daca trebuie facut lvl up
+            for (Hero h : heroes) {
                 h.checkHp();
                 h.levelUp();
             }
         }
-        for(Hero h:heroes) {
+        // Scrierea in fisierul de iesire
+        for (Hero h : heroes) {
             fileSystem.writeWord(h.getHeroClass());
-            if(h.getHp() > 0){
+            if (h.getHp() > 0) {
                 fileSystem.writeWord(h.getStatus());
                 fileSystem.writeWord(map.getPos(h));
                 fileSystem.writeNewLine();

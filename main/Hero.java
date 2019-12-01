@@ -9,61 +9,67 @@ public abstract class Hero implements Visitor, Visitable {
     protected boolean isRooted = false;
     protected int debuffDuration = 0;
 
-    int getLevel() {
+    final int getLevel() {
         return this.level;
     }
 
-    int getHp() {
+    final int getHp() {
         return this.hp;
     }
 
-    boolean isRooted() {
+    final boolean isRooted() {
         return this.isRooted;
     }
 
-    boolean isDead() {
+    final boolean isDead() {
         return this.isDead;
     }
 
-    void getHit(int dmg) {
+    final void getHit(final int dmg) {
         this.hp -= dmg;
     }
 
-    void debuff(int dmg, Boolean root, int rounds) {
+    final void debuff(final int dmg, final Boolean root, final int rounds) {
+        // Setez parametrii de debuff
         this.debuffDamage = dmg;
         this.isRooted = root;
         this.debuffDuration = rounds;
     }
 
-    void applyDebuff() {
+    final void applyDebuff() {
+        // Aplic debuff-ul daca exista
         if (this.debuffDuration == 0) {
             this.isRooted = false;
             return;
         }
-        this.debuffDuration --;
+        this.debuffDuration--;
         this.getHit(debuffDamage);
     }
 
-    void checkHp() {
-        if(this.hp <= 0) {
+    final void checkHp() {
+        // Schimba statutul eroului (din viu in mort) daca are sub 0 hp
+        if (this.hp <= 0) {
             this.isDead = true;
         }
     }
 
-    abstract float getLandModifier(LandType land);
-
-    public abstract void takeDmg(Visitor hero, LandType land);
-
-    abstract void levelUp();
-
-    void printStatus() {
-        System.out.print(this.level
+    final String getStatus() {
+        return this.level
                 + " "
                 + this.experience
                 + " "
                 + this.hp
-                + " ");
+                + " ";
     }
 
-    abstract void printHeroClass();
+    /**
+     * @param land - tipul de teren pe care se desfasoara lupta
+     * @return - 1, daca nu se afla pe taramul cu bonus, sau modificatorul de teren pentru clasa
+     *          respectiva daca se afla pe taramul cu bonus
+     */
+    abstract float getLandModifier(LandType land);
+
+    abstract void levelUp();
+
+    abstract String getHeroClass();
 }
