@@ -16,7 +16,6 @@ public final class Constants {
     public static final float IGNITE_APPLIED_TO_WIZ = 1.05f;
     // Knight abilities modifiers
     public static final float EXECUTE_APPLIED_TO_ROGUE = 1.15f;
-    public static final float EXECUTE_APPLIED_TO_KNIGHT = 1f;
     public static final float EXECUTE_APPLIED_TO_PYRO = 1.1f;
     public static final float EXECUTE_APPLIED_TO_WIZ = 0.8f;
     public static final float SLAM_APPLIED_TO_ROGUE = 0.8f;
@@ -82,6 +81,63 @@ public final class Constants {
     public static final int ROGUE_HP_GROWTH = 40;
     public static final int BACKSTAB_DMG_PER_LEVEL = 20;
     public static final int PARALYSIS_DMG_PER_LEVEL = 10;
+    // DamageAngel Constants
+    public static final float DAMAGE_ANGEL_KNIGHT_DMG_GAIN = 0.15f;
+    public static final float DAMAGE_ANGEL_PYRO_DMG_GAIN = 0.20f;
+    public static final float DAMAGE_ANGEL_ROGUE_DMG_GAIN = 0.30f;
+    public static final float DAMAGE_ANGEL_WIZARD_DMG_GAIN = 0.40f;
+    // DarkAngel Constants
+    public static final int DARK_ANGEL_KNIGHT_HP_DEDUCTION = -40;
+    public static final int DARK_ANGEL_PYRO_HP_DEDUCTION = -30;
+    public static final int DARK_ANGEL_ROGUE_HP_DEDUCTION = -10;
+    public static final int DARK_ANGEL_WIZARD_HP_DEDUCTION = -20;
+    // Dracula Constans
+    public static final int DRACULA_KNIGHT_HP_DEDUCTION = -60;
+    public static final int DRACULA_PYRO_HP_DEDUCTION = -40;
+    public static final int DRACULA_ROGUE_HP_DEDUCTION = -35;
+    public static final int DRACULA_WIZARD_HP_DEDUCTION = -20;
+    public static final float DRACULA_KNIGHT_DMG_DEDUCTION = -0.2f;
+    public static final float DRACULA_PYRO_DMG_DEDUCTION= -0.3f;
+    public static final float DRACULA_ROGUE_DMG_DEDUCTION = -0.1f;
+    public static final float DRACULA_WIZARD_DMG_DEDUCTION = -0.4f;
+    // GoodBoy Constants
+    public static final int GOOD_BOY_KNIGHT_HP_GAIN = 20;
+    public static final int GOOD_BOY_PYRO_HP_GAIN = 30;
+    public static final int GOOD_BOY_ROGUE_HP_GAIN = 40;
+    public static final int GOOD_BOY_WIZARD_HP_GAIN = 50;
+    public static final float GOOD_BOY_KNIGHT_DMG_GAIN = 0.4f;
+    public static final float GOOD_BOY_PYRO_DMG_GAIN = 0.5f;
+    public static final float GOOD_BOY_ROGUE_DMG_GAIN = 0.4f;
+    public static final float GOOD_BOY_WIZARD_DMG_GAIN = 0.3f;
+    // LevelUpAngel Constants
+    public static final float LEVEL_UP_ANGEL_KNIGHT_DMG_GAIN = 0.1f;
+    public static final float LEVEL_UP_ANGEL_PYRO_DMG_GAIN = 0.2f;
+    public static final float LEVEL_UP_ANGEL_ROGUE_DMG_GAIN = 0.15f;
+    public static final float LEVEL_UP_ANGEL_WIZARD_DMG_GAIN = 0.25f;
+    // LifeGiver Constants
+    public static final int LIFE_GIVER_KNIGHT_HP_GAIN = 100;
+    public static final int LIFE_GIVER_PYRO_HP_GAIN = 80;
+    public static final int LIFE_GIVER_ROGUE_HP_GAIN = 90;
+    public static final int LIFE_GIVER_WIZARD_HP_GAIN = 120;
+    // SmallAngel Constants
+    public static final int SMALL_ANGEL_KNIGHT_HP_GAIN = 10;
+    public static final int SMALL_ANGEL_PYRO_HP_GAIN = 15;
+    public static final int SMALL_ANGEL_ROGUE_HP_GAIN = 20;
+    public static final int SMALL_ANGEL_WIZARD_HP_GAIN = 25;
+    public static final float SMALL_ANGEL_KNIGHT_DMG_GAIN = 0.1f;
+    public static final float SMALL_ANGEL_PYRO_DMG_GAIN = 0.15f;
+    public static final float SMALL_ANGEL_ROGUE_DMG_GAIN = 0.05f;
+    public static final float SMALL_ANGEL_WIZARD_DMG_GAIN = 0.1f;
+    // Spawner Constants
+    public static final int SPAWNER_KNIGHT_REVIVE_HP = 200;
+    public static final int SPAWNER_PYRO_REVIVE_HP = 150;
+    public static final int SPAWNER_ROGUE_REVIVE_HP = 180;
+    public static final int SPAWNER_WIZARD_REVIVE_HP = 120;
+    // XPAngel Constants
+    public static final int XP_ANGEL_KNIGHT_XP_GAIN = 45;
+    public static final int XP_ANGEL_PYRO_XP_GAIN = 50;
+    public static final int XP_ANGEL_ROGUE_XP_GAIN = 40;
+    public static final int XP_ANGEL_WIZARD_XP_GAIN = 60;
 
     private Constants() {
     }
