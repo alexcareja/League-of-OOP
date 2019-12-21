@@ -1,5 +1,6 @@
 package angels;
 
+import Utils.Constants;
 import heroes.Knight;
 import heroes.Pyromancer;
 import heroes.Rogue;
@@ -30,7 +31,12 @@ public class Dracula extends Angel implements Visitor {
     }
 
     @Override
-    void printAngel() {
-        System.out.print("Dracula hit ");
+    public String getAngelType() {
+        return Constants.DRACULA;
+    }
+
+    @Override
+    public String getAction() {
+        return Constants.HIT;
     }
 }

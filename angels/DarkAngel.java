@@ -1,5 +1,6 @@
 package angels;
 
+import Utils.Constants;
 import heroes.*;
 import map.LandType;
 import visitor_pattern.Visitor;
@@ -27,7 +28,12 @@ public class DarkAngel extends Angel implements Visitor {
     }
 
     @Override
-    void printAngel() {
-        System.out.print("DarkAngel hit ");
+    public String getAngelType() {
+        return Constants.DARKANGEL;
+    }
+
+    @Override
+    public String getAction() {
+        return Constants.HIT;
     }
 }

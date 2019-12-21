@@ -1,5 +1,9 @@
 package main;
 
+import Utils.Constants;
+import admin.GrandWizard;
+import angels.Angel;
+import Utils.AngelFactory;
 import fileio.FileSystem;
 import heroes.Hero;
 import Utils.HeroesFactory;
@@ -7,6 +11,8 @@ import map.GameMap;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public final class Main {
 
@@ -21,6 +27,8 @@ public final class Main {
         int n = fileSystem.nextInt();
         int m = fileSystem.nextInt();
         GameMap map = GameMap.getInstance(m, n, fileSystem);
+        GrandWizard grandWizard = new GrandWizard(fileSystem);
+        AngelFactory angelFactory = AngelFactory.getInstance();
         ArrayList<Hero> heroes = new ArrayList<>();
         int noHeroes = fileSystem.nextInt();
         Hero hero;
@@ -36,9 +44,18 @@ public final class Main {
             map.placeHero(hero, x, y);
         }
         int noRounds = fileSystem.nextInt();
-        String moves;
+        ArrayList<String> moves = new ArrayList<>();
         // Desfasurarea jocului
         for (int i = 0; i < noRounds; i++) {
+            moves.add(fileSystem.nextWord());
+        }
+        Angel angel;
+        int noAngels;
+        String str, angelType;
+        ArrayList<String> arg = new ArrayList<>();
+        for (int i = 0; i < noRounds; i++) {
+            fileSystem.writeWord("~~ Round " + (i + 1) + " ~~");
+            fileSystem.writeNewLine();
             for (Hero h : heroes) {
                 // Aplic damage overtime din runda trecuta daca exista
                 if (!h.isDead()) {
@@ -47,12 +64,11 @@ public final class Main {
                 }
             }
             // Citeste mutarile
-            moves = fileSystem.nextWord();
             int j = 0;
             char move;
             for (Hero h : heroes) {
                 // Muta eroul daca nu este imobilizat
-                move = moves.charAt(j++);
+                move = moves.get(i).charAt(j++);
                 if (h.isRooted() || h.isDead()) {
                     continue;
                 }
@@ -65,8 +81,27 @@ public final class Main {
                 h.checkHp();
                 h.levelUp();
             }
+            // Citeste din input Ingerii pentru runda curenta
+            noAngels = fileSystem.nextInt();
+            for(j = 0; j < noAngels; j++) {
+                str = fileSystem.nextWord();
+                List<String> ang = Arrays.asList(str.split(","));
+                angelType = ang.get(0);
+                x = Integer.parseInt(ang.get(1));
+                y = Integer.parseInt(ang.get(2));
+                angel = angelFactory.createAngel(angelType);
+                angel.addObserver(grandWizard);
+                arg.add(Constants.SPAWN);
+                arg.add(Integer.toString(x));
+                arg.add(Integer.toString(y));
+                angel.notifyObservers(arg);
+                arg.clear();
+                map.spawnAngel(angel, x, y);
+            }
+            fileSystem.writeNewLine();
         }
         // Scrierea in fisierul de iesire
+        fileSystem.writeWord("~~ Results ~~\n");
         for (Hero h : heroes) {
             fileSystem.writeWord(h.getHeroClass());
             if (h.getHp() > 0) {

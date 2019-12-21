@@ -1,11 +1,14 @@
 package angels;
 
+import Utils.Constants;
 import heroes.Knight;
 import heroes.Pyromancer;
 import heroes.Rogue;
 import heroes.Wizard;
 import map.LandType;
 import visitor_pattern.Visitor;
+
+import java.util.Collection;
 
 public class XPAngel extends Angel implements Visitor {
 
@@ -30,7 +33,12 @@ public class XPAngel extends Angel implements Visitor {
     }
 
     @Override
-    void printAngel() {
-        System.out.print("XPAngel helped ");
+    public String getAngelType() {
+        return Constants.XPANGEL;
+    }
+
+    @Override
+    public String getAction() {
+        return Constants.HELPED;
     }
 }

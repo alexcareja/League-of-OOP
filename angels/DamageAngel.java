@@ -1,5 +1,6 @@
 package angels;
 
+import Utils.Constants;
 import heroes.Knight;
 import heroes.Pyromancer;
 import heroes.Rogue;
@@ -29,7 +30,12 @@ public class DamageAngel extends Angel {
     }
 
     @Override
-    void printAngel() {
-        System.out.print("DamageAngel helped ");
+    public String getAngelType() {
+        return Constants.DAMAGEANGEL;
+    }
+
+    @Override
+    public String getAction() {
+        return Constants.HELPED;
     }
 }

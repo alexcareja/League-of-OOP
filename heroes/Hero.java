@@ -76,4 +76,6 @@ public abstract class Hero implements Visitor, Visitable {
     public abstract void levelUp();
 
     public abstract String getHeroClass();
+
+    public abstract String getHeroType();
 }

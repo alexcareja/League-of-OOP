@@ -1,14 +1,18 @@
 package map;
 
+import Utils.Constants;
+import angels.Angel;
 import fileio.FileSystem;
 import heroes.Hero;
 import heroes.Wizard;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Observable;
 
-public final class GameMap {
+public final class GameMap extends Observable {
     private static GameMap instance = null;
     private int n;
     private int m;
@@ -103,8 +107,30 @@ public final class GameMap {
                 h1 = h2;
                 h2 = h3;
             }
-            h2.takeDmg(h1, this.map[i / this.m][i % this.m]);
-            h1.takeDmg(h2, this.map[i / this.m][i % this.m]);
+            h2.accept(h1, this.map[i / this.m][i % this.m]);
+            h1.accept(h2, this.map[i / this.m][i % this.m]);
+        }
+    }
+
+    public void spawnAngel(Angel angel, int x, int y) {
+        ArrayList<String> arg = new ArrayList<>();
+        int i = 0;
+        boolean wasAlive;
+        for (Hero h : playersPositions.keySet()) {
+            wasAlive = !h.isDead();
+            if(playersPositions.get(h) == x * this.m + y && wasAlive) {
+                h.accept(angel, null);
+                arg.add(angel.getAction());
+                arg.add(h.getHeroType());
+                arg.add(Integer.toString(i));
+                angel.notifyObservers(arg);
+                if(h.isDead()) {
+                    arg.set(0, Constants.DIED);
+                    angel.notifyObservers(arg);
+                }
+                arg.clear();
+            }
+            i++;
         }
     }
 

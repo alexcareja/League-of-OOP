@@ -29,7 +29,7 @@ public class Wizard extends Hero {
     }
 
     @Override
-    public final void dealDmg(final Knight hero, final LandType land) {
+    public final void visit(final Knight hero, final LandType land) {
         int heroMaxHp = Constants.KNIGHT_INIT_HP + hero.getLevel() * Constants.KNIGHT_HP_GROWTH;
         float landMod = this.getLandModifier(land);
         int drainDmg = Math.round(this.drain * Math.min(Constants.DRAIN_MAX_HEALTH_MULT
@@ -46,7 +46,7 @@ public class Wizard extends Hero {
     }
 
     @Override
-    public final void dealDmg(final Pyromancer hero, final LandType land) {
+    public final void visit(final Pyromancer hero, final LandType land) {
         int heroMaxHp = Constants.PYRO_INIT_HP + hero.getLevel() * Constants.PYRO_HP_GROWTH;
         float landMod = this.getLandModifier(land);
         int drainDmg = Math.round(this.drain * Math.min(Constants.DRAIN_MAX_HEALTH_MULT
@@ -63,7 +63,7 @@ public class Wizard extends Hero {
     }
 
     @Override
-    public final void dealDmg(final Wizard hero, final LandType land) {
+    public final void visit(final Wizard hero, final LandType land) {
         this.deflectFlatDmg = 0;
         int heroMaxHp = Constants.WIZ_INIT_HP + hero.getLevel() * Constants.WIZ_HP_GROWTH;
         float landMod = this.getLandModifier(land);
@@ -78,7 +78,7 @@ public class Wizard extends Hero {
     }
 
     @Override
-    public final void dealDmg(final Rogue hero, final LandType land) {
+    public final void visit(final Rogue hero, final LandType land) {
         int heroMaxHp = Constants.ROGUE_INIT_HP + hero.getLevel() * Constants.ROGUE_HP_GROWTH;
         float landMod = this.getLandModifier(land);
         int drainDmg = Math.round(this.drain * Math.min(Constants.DRAIN_MAX_HEALTH_MULT
@@ -95,8 +95,8 @@ public class Wizard extends Hero {
     }
 
     @Override
-    public final void takeDmg(final Visitor v, final LandType land) {
-        v.dealDmg(this, land);
+    public final void accept(final Visitor v, final LandType land) {
+        v.visit(this, land);
     }
 
     @Override
@@ -125,6 +125,11 @@ public class Wizard extends Hero {
     @Override
     public final String getHeroClass() {
         return "W ";
+    }
+
+    @Override
+    public final String getHeroType() {
+        return "Wizard";
     }
 
 }

@@ -138,6 +138,25 @@ public final class Constants {
     public static final int XP_ANGEL_PYRO_XP_GAIN = 50;
     public static final int XP_ANGEL_ROGUE_XP_GAIN = 40;
     public static final int XP_ANGEL_WIZARD_XP_GAIN = 60;
+    // Observer Arguments
+    public static final String SPAWN = "SPAWN";
+    public static final String HELP = "HELP";
+    public static final String HINDER = "HINDER";
+    public static final String DIED = "DIED";
+    // Angel Types
+    public static final String DAMAGEANGEL = "DamageAngel";
+    public static final String DARKANGEL = "DarkAngel";
+    public static final String DRACULA = "Dracula";
+    public static final String GOODBOY = "GoodBoy";
+    public static final String LEVELUPANGEL = "LevelUpAngel";
+    public static final String LIFEGIVER = "LifeGiver";
+    public static final String SMALLANGEL = "SmallAngel";
+    public static final String SPAWNER = "Spawner";
+    public static final String THEDOOMER = "TheDoomer";
+    public static final String XPANGEL = "XPAngel";
+    // Angel actions
+    public static final String HELPED = "helped";
+    public static final String HIT = "hit";
 
     private Constants() {
     }

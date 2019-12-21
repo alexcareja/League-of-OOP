@@ -25,7 +25,7 @@ public class Rogue extends Hero {
     }
 
     @Override
-    public final void dealDmg(final Knight hero, final LandType land) {
+    public final void visit(final Knight hero, final LandType land) {
         int duration = Constants.PARALYSIS_DURATION;
         float backstabCrit = 1f;
         if (land == LandType.Woods) {
@@ -51,7 +51,7 @@ public class Rogue extends Hero {
     }
 
     @Override
-    public final void dealDmg(final Pyromancer hero, final LandType land) {
+    public final void visit(final Pyromancer hero, final LandType land) {
         int duration = Constants.PARALYSIS_DURATION;
         float backstabCrit = 1;
         if (land == LandType.Woods) {
@@ -77,7 +77,7 @@ public class Rogue extends Hero {
     }
 
     @Override
-    public final void dealDmg(final Wizard hero, final LandType land) {
+    public final void visit(final Wizard hero, final LandType land) {
         int duration = Constants.PARALYSIS_DURATION;
         float backstabCrit = 1;
         if (land == LandType.Woods) {
@@ -107,7 +107,7 @@ public class Rogue extends Hero {
     }
 
     @Override
-    public final void dealDmg(final Rogue hero, final LandType land) {
+    public final void visit(final Rogue hero, final LandType land) {
         int duration = Constants.PARALYSIS_DURATION;
         float backstabCrit = 1;
         if (land == LandType.Woods) {
@@ -133,8 +133,8 @@ public class Rogue extends Hero {
     }
 
     @Override
-    public final void takeDmg(final Visitor v, final LandType land) {
-        v.dealDmg(this, land);
+    public final void accept(final Visitor v, final LandType land) {
+        v.visit(this, land);
     }
 
     @Override
@@ -159,5 +159,10 @@ public class Rogue extends Hero {
     @Override
     public final String getHeroClass() {
         return "R ";
+    }
+
+    @Override
+    public final String getHeroType() {
+        return "Rogue";
     }
 }

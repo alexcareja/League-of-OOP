@@ -27,7 +27,7 @@ public class Pyromancer extends Hero {
     }
 
     @Override
-    public final void dealDmg(final Knight hero, final LandType land) {
+    public final void visit(final Knight hero, final LandType land) {
         float landMod = this.getLandModifier(land);
         int fireblastDmg = Math.round(this.fireblast
                 * Constants.FIREBLAST_APPLIED_TO_KNIGHT * landMod);
@@ -44,7 +44,7 @@ public class Pyromancer extends Hero {
     }
 
     @Override
-    public final void dealDmg(final Pyromancer hero, final LandType land) {
+    public final void visit(final Pyromancer hero, final LandType land) {
         float landMod = this.getLandModifier(land);
         int fireblastDmg = Math.round(this.fireblast
                 * Constants.FIREBLAST_APPLIED_TO_PYRO * landMod);
@@ -61,7 +61,7 @@ public class Pyromancer extends Hero {
     }
 
     @Override
-    public final void dealDmg(final Wizard hero, final LandType land) {
+    public final void visit(final Wizard hero, final LandType land) {
         float landMod = this.getLandModifier(land);
         int fireblastDmg = Math.round(this.fireblast
                 * Constants.FIREBLAST_APPLIED_TO_WIZ * landMod);
@@ -82,7 +82,7 @@ public class Pyromancer extends Hero {
     }
 
     @Override
-    public final void dealDmg(final Rogue hero, final LandType land) {
+    public final void visit(final Rogue hero, final LandType land) {
         float landMod = this.getLandModifier(land);
         int fireblastDmg = Math.round(this.fireblast
                 * Constants.FIREBLAST_APPLIED_TO_ROGUE * landMod);
@@ -99,8 +99,8 @@ public class Pyromancer extends Hero {
     }
 
     @Override
-    public final void takeDmg(final Visitor v, final LandType land) {
-        v.dealDmg(this, land);
+    public final void accept(final Visitor v, final LandType land) {
+        v.visit(this, land);
     }
 
     @Override
@@ -126,6 +126,11 @@ public class Pyromancer extends Hero {
     @Override
     public final String getHeroClass() {
         return "P ";
+    }
+
+    @Override
+    public final String getHeroType() {
+        return "Pyromancer";
     }
 
 }

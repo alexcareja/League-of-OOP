@@ -1,5 +1,6 @@
 package angels;
 
+import Utils.Constants;
 import heroes.Knight;
 import heroes.Pyromancer;
 import heroes.Rogue;
@@ -30,7 +31,12 @@ public class Spawner extends Angel implements Visitor {
     }
 
     @Override
-    void printAngel() {
-        System.out.print("Spawner helped ");
+    public String getAngelType() {
+        return Constants.SPAWNER;
+    }
+
+    @Override
+    public String getAction() {
+        return Constants.HELPED;
     }
 }

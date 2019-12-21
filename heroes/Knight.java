@@ -25,7 +25,7 @@ public class Knight extends Hero {
     }
 
     @Override
-    public final void dealDmg(final Knight hero, final LandType land) {
+    public final void visit(final Knight hero, final LandType land) {
         if (hero.getHp() < this.executePercentage
                 * (hero.getLevel() * Constants.KNIGHT_HP_GROWTH + Constants.KNIGHT_INIT_HP)) {
             // execute hero
@@ -35,7 +35,7 @@ public class Knight extends Hero {
             return;
         }
         float landMod = this.getLandModifier(land);
-        int executeDmg = Math.round(this.execute * Constants.EXECUTE_APPLIED_TO_KNIGHT * landMod);
+        int executeDmg = Math.round(this.execute * landMod);
         int slamDmg = Math.round(this.slam * Constants.SLAM_APPLIED_TO_KNIGHT * landMod);
         // Aplic root pentru o runa oponentului
         hero.debuff(0, true, 1);
@@ -48,7 +48,7 @@ public class Knight extends Hero {
     }
 
     @Override
-    public final void dealDmg(final Pyromancer hero, final LandType land) {
+    public final void visit(final Pyromancer hero, final LandType land) {
         if (hero.getHp() < this.executePercentage
                 * (hero.getLevel() * Constants.PYRO_HP_GROWTH + Constants.PYRO_INIT_HP)) {
             // execute hero
@@ -71,7 +71,7 @@ public class Knight extends Hero {
     }
 
     @Override
-    public final void dealDmg(final Wizard hero, final LandType land) {
+    public final void visit(final Wizard hero, final LandType land) {
         if (hero.getHp() < this.executePercentage
                 * (hero.getLevel() * Constants.WIZ_HP_GROWTH + Constants.WIZ_INIT_HP)) {
             // execute hero
@@ -98,7 +98,7 @@ public class Knight extends Hero {
     }
 
     @Override
-    public final void dealDmg(final Rogue hero, final LandType land) {
+    public final void visit(final Rogue hero, final LandType land) {
         if (hero.getHp() < this.executePercentage
                 * (hero.getLevel() * Constants.ROGUE_HP_GROWTH + Constants.ROGUE_INIT_HP)) {
             // execute hero
@@ -121,8 +121,8 @@ public class Knight extends Hero {
     }
 
     @Override
-    public final void takeDmg(final Visitor v, final LandType land) {
-        v.dealDmg(this, land);
+    public final void accept(final Visitor v, final LandType land) {
+        v.visit(this, land);
     }
 
     @Override
@@ -149,6 +149,11 @@ public class Knight extends Hero {
     @Override
     public final String getHeroClass() {
         return "K ";
+    }
+
+    @Override
+    public final String getHeroType() {
+        return "Knight";
     }
 
 }
