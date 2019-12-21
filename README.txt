@@ -66,10 +66,10 @@ organizare mai buna a proiectului, dupa cum urmeaza:
 	generarea eroilor la inceputul programului.
 
 
-<>|<> Feedback:-Cool tema! Singura obiectie este ca in jocuri de obicei cand ai
+<>|<> Feedback:	-Cool tema! Singura obiectie este ca in jocuri de obicei cand ai
 	o pasiva care iti permite sa dai un critical o data la 3 atacuri, nu se da
-	proc incepand cu primul atac, ci cu al 3-lea incepand de la primul atac.
- 				-Sper ca la etapa a 2-a sa apara mobi
+	proc incepand cu primul atac, ci cu al 3-lea.
+ 		-Sper ca la etapa a 2-a sa apara mobi
 
                                 \\_V_//
                                 \/=|=\/
