@@ -1,8 +1,8 @@
 package heroes;
 
-import Utils.Constants;
+import utils.Constants;
 import map.LandType;
-import visitor_pattern.Visitor;
+import visitor.Visitor;
 
 public class Pyromancer extends Hero {
     private int fireblast;
@@ -10,8 +10,10 @@ public class Pyromancer extends Hero {
     private int igniteOt;
     private int igniteDuration;
 
-    public Pyromancer() {
+    public Pyromancer(final int id) {
+        this.id = id;
         this.hp = Constants.PYRO_INIT_HP;
+        this.maxHp = Constants.PYRO_INIT_HP;
         this.fireblast = Constants.FIREBLAST_FLAT_DMG;
         this.ignite = Constants.IGNITE_FLAT_DMG;
         this.igniteOt = Constants.IGNITE_OT_DMG;
@@ -117,6 +119,7 @@ public class Pyromancer extends Hero {
             // Creste damage-ul si viata proportional cu nivelul si intoarce eroul la full hp
             this.level = i;
             this.hp = Constants.PYRO_INIT_HP + i * Constants.PYRO_HP_GROWTH;
+            this.maxHp = this.hp;
             this.fireblast = Constants.FIREBLAST_FLAT_DMG + i * Constants.FIREBLAST_DMG_PER_LEVEL;
             this.ignite = Constants.IGNITE_FLAT_DMG + i * Constants.IGNITE_FLAT_DMG_PER_LEVEL;
             this.igniteOt = Constants.IGNITE_OT_DMG + i * Constants.IGNITE_OT_DMG_PER_LEVEL;

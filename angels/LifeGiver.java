@@ -1,33 +1,33 @@
 package angels;
 
-import Utils.Constants;
+import utils.Constants;
 import heroes.Knight;
 import heroes.Pyromancer;
 import heroes.Rogue;
 import heroes.Wizard;
 import map.LandType;
-import visitor_pattern.Visitor;
+import visitor.Visitor;
 
-public class LifeGiver extends Angel implements Visitor {
+public final class LifeGiver extends Angel implements Visitor {
 
     @Override
-    public void visit(Knight hero, LandType land) {
-
+    public void visit(final Knight hero, final LandType land) {
+        hero.heal(Constants.LIFE_GIVER_KNIGHT_HEAL);
     }
 
     @Override
-    public void visit(Pyromancer hero, LandType land) {
-
+    public void visit(final Pyromancer hero, final LandType land) {
+        hero.heal(Constants.LIFE_GIVER_PYRO_HEAL);
     }
 
     @Override
-    public void visit(Wizard hero, LandType land) {
-
+    public void visit(final Wizard hero, final LandType land) {
+        hero.heal(Constants.LIFE_GIVER_WIZARD_HEAL);
     }
 
     @Override
-    public void visit(Rogue hero, LandType land) {
-
+    public void visit(final Rogue hero, final LandType land) {
+        hero.heal(Constants.LIFE_GIVER_ROGUE_HEAL);
     }
 
     @Override
@@ -37,6 +37,6 @@ public class LifeGiver extends Angel implements Visitor {
 
     @Override
     public String getAction() {
-        return Constants.HELPED;
+        return Constants.HELP;
     }
 }

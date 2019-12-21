@@ -1,22 +1,22 @@
 package angels;
 
-import visitor_pattern.Visitor;
+import visitor.Visitor;
 
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
 public abstract class Angel extends Observable implements Visitor {
-    ArrayList<Observer> observers = new ArrayList<>();
+    private ArrayList<Observer> observers = new ArrayList<>();
 
     @Override
-    public synchronized void addObserver(Observer o) {
+    public final synchronized void addObserver(final Observer o) {
         this.observers.add(o);
     }
 
     @Override
-    public void notifyObservers(Object arg) {
-        for(Observer o : this.observers) {
+    public final void notifyObservers(final Object arg) {
+        for (Observer o : this.observers) {
             o.update(this, arg);
         }
     }

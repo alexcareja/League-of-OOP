@@ -1,12 +1,12 @@
 package main;
 
-import Utils.Constants;
+import utils.Constants;
 import admin.GrandWizard;
 import angels.Angel;
-import Utils.AngelFactory;
+import utils.AngelFactory;
 import fileio.FileSystem;
 import heroes.Hero;
-import Utils.HeroesFactory;
+import utils.HeroesFactory;
 import map.GameMap;
 
 import java.io.IOException;
@@ -28,6 +28,7 @@ public final class Main {
         int m = fileSystem.nextInt();
         GameMap map = GameMap.getInstance(m, n, fileSystem);
         GrandWizard grandWizard = new GrandWizard(fileSystem);
+        map.addObserver(grandWizard);
         AngelFactory angelFactory = AngelFactory.getInstance();
         ArrayList<Hero> heroes = new ArrayList<>();
         int noHeroes = fileSystem.nextInt();
@@ -37,7 +38,7 @@ public final class Main {
         // Generarea eroilor
         for (int i = 0; i < noHeroes; i++) {
             String type = fileSystem.nextWord();
-            hero = heroesFactory.getHeroByChar(type.charAt(0));
+            hero = heroesFactory.getHeroByChar(type.charAt(0), i);
             heroes.add(hero);
             x = fileSystem.nextInt();
             y = fileSystem.nextInt();
@@ -83,7 +84,7 @@ public final class Main {
             }
             // Citeste din input Ingerii pentru runda curenta
             noAngels = fileSystem.nextInt();
-            for(j = 0; j < noAngels; j++) {
+            for (j = 0; j < noAngels; j++) {
                 str = fileSystem.nextWord();
                 List<String> ang = Arrays.asList(str.split(","));
                 angelType = ang.get(0);
@@ -96,7 +97,7 @@ public final class Main {
                 arg.add(Integer.toString(y));
                 angel.notifyObservers(arg);
                 arg.clear();
-                map.spawnAngel(angel, x, y);
+                map.spawnAngel(angel, heroes, x, y);
             }
             fileSystem.writeNewLine();
         }

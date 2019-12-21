@@ -1,33 +1,37 @@
 package angels;
 
-import Utils.Constants;
+import utils.Constants;
 import heroes.Knight;
 import heroes.Pyromancer;
 import heroes.Rogue;
 import heroes.Wizard;
 import map.LandType;
-import visitor_pattern.Visitor;
+import visitor.Visitor;
 
-public class SmallAngel extends Angel implements Visitor {
+public final class SmallAngel extends Angel implements Visitor {
 
     @Override
-    public void visit(Knight hero, LandType land) {
-
+    public void visit(final Knight hero, final LandType land) {
+        hero.modAngelModifier(Constants.SMALL_ANGEL_KNIGHT_DMG_GAIN);
+        hero.heal(Constants.SMALL_ANGEL_KNIGHT_HEAL);
     }
 
     @Override
-    public void visit(Pyromancer hero, LandType land) {
-
+    public void visit(final Pyromancer hero, final LandType land) {
+        hero.modAngelModifier(Constants.SMALL_ANGEL_PYRO_DMG_GAIN);
+        hero.heal(Constants.SMALL_ANGEL_PYRO_HEAL);
     }
 
     @Override
-    public void visit(Wizard hero, LandType land) {
-
+    public void visit(final Wizard hero, final LandType land) {
+        hero.modAngelModifier(Constants.SMALL_ANGEL_WIZARD_DMG_GAIN);
+        hero.heal(Constants.SMALL_ANGEL_WIZARD_HEAL);
     }
 
     @Override
-    public void visit(Rogue hero, LandType land) {
-
+    public void visit(final Rogue hero, final LandType land) {
+        hero.modAngelModifier(Constants.SMALL_ANGEL_ROGUE_DMG_GAIN);
+        hero.heal(Constants.SMALL_ANGEL_ROGUE_HEAL);
     }
 
     @Override
@@ -37,6 +41,6 @@ public class SmallAngel extends Angel implements Visitor {
 
     @Override
     public String getAction() {
-        return Constants.HELPED;
+        return Constants.HELP;
     }
 }

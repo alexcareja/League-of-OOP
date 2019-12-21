@@ -1,6 +1,6 @@
 package admin;
 
-import Utils.Constants;
+import utils.Constants;
 import angels.Angel;
 import fileio.FileSystem;
 
@@ -9,22 +9,22 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
-public class GrandWizard implements Observer {
+public final class GrandWizard implements Observer {
     private FileSystem fileSystem;
 
-    public GrandWizard(FileSystem fileSystem) {
+    public GrandWizard(final FileSystem fileSystem) {
         this.fileSystem = fileSystem;
     }
 
 
     @Override
-    public void update(Observable o, Object arg) {
-        ArrayList args = (ArrayList)arg;
+    public void update(final Observable o, final Object arg) {
+        ArrayList args = (ArrayList) arg;
         String action = (String) args.get(0);
         switch (action) {
             case Constants.SPAWN:
                 try {
-                    fileSystem.writeWord("Angel " + ((Angel)o).getAngelType()
+                    fileSystem.writeWord("Angel " + ((Angel) o).getAngelType()
                             + " was spawned at " + args.get(1) + " " + args.get(2));
                     fileSystem.writeNewLine();
                 } catch (IOException e) {
@@ -33,7 +33,7 @@ public class GrandWizard implements Observer {
                 break;
             case Constants.HELP:
                 try {
-                    fileSystem.writeWord(((Angel)o).getAngelType() + " helped "
+                    fileSystem.writeWord(((Angel) o).getAngelType() + " helped "
                             + args.get(1) + " " + args.get(2));
                     fileSystem.writeNewLine();
                 } catch (IOException e) {
@@ -42,7 +42,7 @@ public class GrandWizard implements Observer {
                 break;
             case Constants.HIT:
                 try {
-                    fileSystem.writeWord(((Angel)o).getAngelType() + " hit "
+                    fileSystem.writeWord(((Angel) o).getAngelType() + " hit "
                             + args.get(1) + " " + args.get(2));
                     fileSystem.writeNewLine();
                 } catch (IOException e) {
@@ -52,11 +52,13 @@ public class GrandWizard implements Observer {
             case Constants.DIED:
                 try {
                     fileSystem.writeWord("Player " + args.get(1) + " " + args.get(2)
-                            + " was killed by an angel");
+                            + " was killed by " + args.get(3) + " " + args.get(4));
                     fileSystem.writeNewLine();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+                break;
+            default:
                 break;
         }
     }

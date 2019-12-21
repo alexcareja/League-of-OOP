@@ -1,16 +1,18 @@
 package heroes;
 
-import Utils.Constants;
+import utils.Constants;
 import map.LandType;
-import visitor_pattern.Visitor;
+import visitor.Visitor;
 
 public class Rogue extends Hero {
     private int backstab;
     private int paralysis;
     private int backstabCount;
 
-    public Rogue() {
+    public Rogue(final int id) {
+        this.id = id;
         this.hp = Constants.ROGUE_INIT_HP;
+        this.maxHp = Constants.ROGUE_INIT_HP;
         this.backstab = Constants.BACKSTAB_FLAT_DMG;
         this.paralysis = Constants.PARALYSIS_FLAT_DMG;
         this.backstabCount = 0;
@@ -151,6 +153,7 @@ public class Rogue extends Hero {
             // Creste damage-ul si viata proportional cu nivelul si intoarce eroul la full hp
             this.level = i;
             this.hp = Constants.ROGUE_INIT_HP + i * Constants.ROGUE_HP_GROWTH;
+            this.maxHp = this.hp;
             this.backstab = Constants.BACKSTAB_FLAT_DMG + i * Constants.BACKSTAB_DMG_PER_LEVEL;
             this.paralysis = Constants.PARALYSIS_FLAT_DMG + i * Constants.PARALYSIS_DMG_PER_LEVEL;
         }

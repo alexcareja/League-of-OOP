@@ -1,33 +1,41 @@
 package angels;
 
-import Utils.Constants;
+import utils.Constants;
 import heroes.Knight;
 import heroes.Pyromancer;
 import heroes.Rogue;
 import heroes.Wizard;
 import map.LandType;
-import visitor_pattern.Visitor;
+import visitor.Visitor;
 
-public class Dracula extends Angel implements Visitor {
+public final class Dracula extends Angel implements Visitor {
 
     @Override
-    public void visit(Knight hero, LandType land) {
-
+    public void visit(final Knight hero, final LandType land) {
+        hero.getHit(Constants.DRACULA_KNIGHT_HP_DEDUCTION);
+        hero.checkHp();
+        hero.modAngelModifier(Constants.DRACULA_KNIGHT_DMG_DEDUCTION);
     }
 
     @Override
-    public void visit(Pyromancer hero, LandType land) {
-
+    public void visit(final Pyromancer hero, final LandType land) {
+        hero.getHit(Constants.DRACULA_PYRO_HP_DEDUCTION);
+        hero.checkHp();
+        hero.modAngelModifier(Constants.DRACULA_PYRO_DMG_DEDUCTION);
     }
 
     @Override
-    public void visit(Wizard hero, LandType land) {
-
+    public void visit(final Wizard hero, final LandType land) {
+        hero.getHit(Constants.DRACULA_WIZARD_HP_DEDUCTION);
+        hero.checkHp();
+        hero.modAngelModifier(Constants.DRACULA_WIZARD_DMG_DEDUCTION);
     }
 
     @Override
-    public void visit(Rogue hero, LandType land) {
-
+    public void visit(final Rogue hero, final LandType land) {
+        hero.getHit(Constants.DRACULA_ROGUE_HP_DEDUCTION);
+        hero.checkHp();
+        hero.modAngelModifier(Constants.DRACULA_ROGUE_DMG_DEDUCTION);
     }
 
     @Override

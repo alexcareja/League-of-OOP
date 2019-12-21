@@ -1,16 +1,13 @@
 package map;
 
-import Utils.Constants;
+import utils.Constants;
 import angels.Angel;
 import fileio.FileSystem;
 import heroes.Hero;
 import heroes.Wizard;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Observable;
+import java.util.*;
 
 public final class GameMap extends Observable {
     private static GameMap instance = null;
@@ -18,6 +15,7 @@ public final class GameMap extends Observable {
     private int m;
     private LandType[][] map;
     private Map<Hero, Integer> playersPositions;
+    private ArrayList<Observer> observers;
     /*
      * Pozitiile jucatorilor sunt reprezentate pe un int astfel: x*m + y, unde m este numarul de
      * coloane, iar x si y sunt linia respectiv coloana din matricea map.(pozitia efectiva)
@@ -26,6 +24,7 @@ public final class GameMap extends Observable {
     private GameMap(final int n, final int m, final FileSystem fileReader) throws IOException {
         this.n = n;
         this.m = m;
+        this.observers = new ArrayList<>();
         this.map = new LandType[n][m];
         for (int i = 0; i < n; i++) {    // Crearea hartii
             String line = fileReader.nextWord();
@@ -85,6 +84,7 @@ public final class GameMap extends Observable {
 
     public void fight() {
         Hero h1, h2;
+        ArrayList<String> arg = new ArrayList<>();
         for (int i = 0; i < this.n * this.m; i++) {
             // Verific fiecare pozitie de pe harta si caut 2 eroi sa se lupte
             h1 = null;
@@ -109,33 +109,66 @@ public final class GameMap extends Observable {
             }
             h2.accept(h1, this.map[i / this.m][i % this.m]);
             h1.accept(h2, this.map[i / this.m][i % this.m]);
+            if(h1.getId() < h2.getId()) {
+                Hero h3 = h1;
+                h1 = h2;
+                h2 = h3;
+            }
+            if (h1.getHp() <= 0) {
+                arg.add(Constants.DIED);
+                arg.add(h1.getHeroType());
+                arg.add(Integer.toString(h1.getId()));
+                arg.add(h2.getHeroType());
+                arg.add(Integer.toString(h2.getId()));
+                this.notifyObservers(arg);
+                arg.clear();
+            }
+            if (h2.getHp() <= 0) {
+                arg.add(Constants.DIED);
+                arg.add(h2.getHeroType());
+                arg.add(Integer.toString(h2.getId()));
+                arg.add(h1.getHeroType());
+                arg.add(Integer.toString(h1.getId()));
+                this.notifyObservers(arg);
+            }
         }
     }
 
-    public void spawnAngel(Angel angel, int x, int y) {
+    public void spawnAngel(final Angel angel, final ArrayList<Hero> heroes,
+                           final int x, final int y) {
         ArrayList<String> arg = new ArrayList<>();
-        int i = 0;
         boolean wasAlive;
-        for (Hero h : playersPositions.keySet()) {
+        for (Hero h : heroes) {
             wasAlive = !h.isDead();
-            if(playersPositions.get(h) == x * this.m + y && wasAlive) {
+            if (playersPositions.get(h) == x * this.m + y && wasAlive) {
                 h.accept(angel, null);
                 arg.add(angel.getAction());
                 arg.add(h.getHeroType());
-                arg.add(Integer.toString(i));
+                arg.add(Integer.toString(h.getId()));
                 angel.notifyObservers(arg);
-                if(h.isDead()) {
+                if (h.isDead()) {
                     arg.set(0, Constants.DIED);
                     angel.notifyObservers(arg);
                 }
                 arg.clear();
             }
-            i++;
         }
     }
 
     public String getPos(final Hero h) {
         int heroPos = playersPositions.get(h);
         return heroPos / this.m + " " + heroPos % this.m;
+    }
+
+    @Override
+    public final synchronized void addObserver(final Observer o) {
+        this.observers.add(o);
+    }
+
+    @Override
+    public final void notifyObservers(final Object arg) {
+        for (Observer o : this.observers) {
+            o.update(this, arg);
+        }
     }
 }

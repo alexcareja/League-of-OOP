@@ -1,16 +1,18 @@
 package heroes;
 
-import Utils.Constants;
+import utils.Constants;
 import map.LandType;
-import visitor_pattern.Visitor;
+import visitor.Visitor;
 
 public class Wizard extends Hero {
     private float drain;
     private float deflect;
     private int deflectFlatDmg;
 
-    public Wizard() {
+    public Wizard(final int id) {
+        this.id = id;
         this.hp = Constants.WIZ_INIT_HP;
+        this.maxHp = Constants.WIZ_INIT_HP;
         this.drain = Constants.DRAIN_FLAT_PERCENTAGE;
         this.deflect = Constants.DEFLECT_FLAT_PERCENTAGE;
         this.deflectFlatDmg = 0;
@@ -113,6 +115,7 @@ public class Wizard extends Hero {
             // Creste damage-ul si viata proportional cu nivelul si intoarce eroul la full hp
             this.level = i;
             this.hp = Constants.WIZ_INIT_HP + i * Constants.WIZ_HP_GROWTH;
+            this.maxHp = this.hp;
             this.drain = Constants.DRAIN_FLAT_PERCENTAGE + i * Constants.DRAIN_PERCENT_PER_LEVEL;
             this.deflect = Constants.DEFLECT_FLAT_PERCENTAGE
                     + i * Constants.DEFLECT_PERCENT_PER_LEVEL;

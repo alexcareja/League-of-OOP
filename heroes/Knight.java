@@ -1,16 +1,18 @@
 package heroes;
 
-import Utils.Constants;
+import utils.Constants;
 import map.LandType;
-import visitor_pattern.Visitor;
+import visitor.Visitor;
 
 public class Knight extends Hero {
     private int execute;
     private float executePercentage;
     private int slam;
 
-    public Knight() {
+    public Knight(final int id) {
+        this.id = id;
         this.hp = Constants.KNIGHT_INIT_HP;
+        this.maxHp = Constants.KNIGHT_INIT_HP;
         this.execute = Constants.EXECUTE_FLAT_DMG;
         this.executePercentage = Constants.EXECUTE_PERCENTAGE;
         this.slam = Constants.SLAM_FLAT_DMG;
@@ -139,6 +141,7 @@ public class Knight extends Hero {
             // Creste damage-ul si viata proportional cu nivelul si intoarce eroul la full hp
             this.level = i;
             this.hp = Constants.KNIGHT_INIT_HP + i * Constants.KNIGHT_HP_GROWTH;
+            this.maxHp = this.hp;
             this.execute = Constants.EXECUTE_FLAT_DMG + i * Constants.EXECUTE_DMG_PER_LEVEL;
             this.executePercentage = Constants.EXECUTE_PERCENTAGE + i
                     * Constants.EXECUTE_PERCENT_PER_LEVEL;

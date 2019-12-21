@@ -1,35 +1,33 @@
 package angels;
 
-import Utils.Constants;
+import utils.Constants;
 import heroes.Knight;
 import heroes.Pyromancer;
 import heroes.Rogue;
 import heroes.Wizard;
 import map.LandType;
-import visitor_pattern.Visitor;
+import visitor.Visitor;
 
-import java.util.Collection;
-
-public class XPAngel extends Angel implements Visitor {
+public final class XPAngel extends Angel implements Visitor {
 
     @Override
-    public void visit(Knight hero, LandType land) {
-
+    public void visit(final Knight hero, final LandType land) {
+        hero.gainExperience(Constants.XP_ANGEL_KNIGHT_XP_GAIN);
     }
 
     @Override
-    public void visit(Pyromancer hero, LandType land) {
-
+    public void visit(final Pyromancer hero, final LandType land) {
+        hero.gainExperience(Constants.XP_ANGEL_PYRO_XP_GAIN);
     }
 
     @Override
-    public void visit(Wizard hero, LandType land) {
-
+    public void visit(final Wizard hero, final LandType land) {
+        hero.gainExperience(Constants.XP_ANGEL_WIZARD_XP_GAIN);
     }
 
     @Override
-    public void visit(Rogue hero, LandType land) {
-
+    public void visit(final Rogue hero, final LandType land) {
+        hero.gainExperience(Constants.XP_ANGEL_ROGUE_XP_GAIN);
     }
 
     @Override
@@ -39,6 +37,6 @@ public class XPAngel extends Angel implements Visitor {
 
     @Override
     public String getAction() {
-        return Constants.HELPED;
+        return Constants.HELP;
     }
 }

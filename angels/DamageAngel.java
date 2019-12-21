@@ -1,32 +1,32 @@
 package angels;
 
-import Utils.Constants;
+import utils.Constants;
 import heroes.Knight;
 import heroes.Pyromancer;
 import heroes.Rogue;
 import heroes.Wizard;
 import map.LandType;
 
-public class DamageAngel extends Angel {
+public final class DamageAngel extends Angel {
 
     @Override
-    public void visit(Knight hero, LandType land) {
-
+    public void visit(final Knight hero, final LandType land) {
+        hero.modAngelModifier(Constants.DAMAGE_ANGEL_KNIGHT_DMG_GAIN);
     }
 
     @Override
-    public void visit(Pyromancer hero, LandType land) {
-
+    public void visit(final Pyromancer hero, final LandType land) {
+        hero.modAngelModifier(Constants.DAMAGE_ANGEL_PYRO_DMG_GAIN);
     }
 
     @Override
-    public void visit(Wizard hero, LandType land) {
-
+    public void visit(final Wizard hero, final LandType land) {
+        hero.modAngelModifier(Constants.DAMAGE_ANGEL_WIZARD_DMG_GAIN);
     }
 
     @Override
-    public void visit(Rogue hero, LandType land) {
-
+    public void visit(final Rogue hero, final LandType land) {
+        hero.modAngelModifier(Constants.DAMAGE_ANGEL_ROGUE_DMG_GAIN);
     }
 
     @Override
@@ -36,6 +36,6 @@ public class DamageAngel extends Angel {
 
     @Override
     public String getAction() {
-        return Constants.HELPED;
+        return Constants.HELP;
     }
 }
