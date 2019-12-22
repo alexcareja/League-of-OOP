@@ -6,8 +6,8 @@ import heroes.Rogue;
 import heroes.Wizard;
 
 public interface Strategy {
-    public void applyStrategy(Knight h);
-    public void applyStrategy(Pyromancer h);
-    public void applyStrategy(Rogue h);
-    public void applyStrategy(Wizard h);
+    void applyStrategy(Knight h);
+    void applyStrategy(Pyromancer h);
+    void applyStrategy(Rogue h);
+    void applyStrategy(Wizard h);
 }

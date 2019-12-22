@@ -119,10 +119,18 @@ public final class GameMap extends Observable {
                 h1 = h2;
                 h2 = h3;
             }
-            h1.applyStrategy(this.offensiveStrategy, this.deffensiveStrategy);
-            h2.applyStrategy(this.offensiveStrategy, this.deffensiveStrategy);
+            if (!h1.isRooted()) {
+                h1.applyStrategy(this.offensiveStrategy, this.deffensiveStrategy);
+            }
+            if (!h2.isRooted()) {
+                h2.applyStrategy(this.offensiveStrategy, this.deffensiveStrategy);
+            }
+//            h2.applyStrategy(this.offensiveStrategy, this.deffensiveStrategy);
+//            h1.applyStrategy(this.offensiveStrategy, this.deffensiveStrategy);
             h2.accept(h1, this.map[i / this.m][i % this.m]);
             h1.accept(h2, this.map[i / this.m][i % this.m]);
+            //System.out.println(h1.getHeroType() + h1.getHp());
+            //System.out.println(h2.getHeroType() + h2.getHp());
             if (h1.getId() < h2.getId()) {
                 Hero h3 = h1;
                 h1 = h2;
@@ -156,7 +164,8 @@ public final class GameMap extends Observable {
         for (Hero h : heroes) {
             wasAlive = !h.isDead();
             if (playersPositions.get(h) == x * this.m + y) {
-                if (h.isDead() && !(angel instanceof Spawner)) {
+                if ((h.isDead() && !(angel instanceof Spawner))
+                        || (!h.isDead() && angel instanceof Spawner)) {
                     continue;
                 }
                 arg.add(angel.getAction());

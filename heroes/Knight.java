@@ -4,7 +4,6 @@ import strategies.Strategy;
 import utils.Constants;
 import map.LandType;
 import visitor.Visitor;
-
 import java.util.ArrayList;
 
 public class Knight extends Hero {
@@ -30,12 +29,13 @@ public class Knight extends Hero {
     }
 
     @Override
-    public final void applyStrategy(Strategy off, Strategy deff) {
+    public final void applyStrategy(final Strategy off, final Strategy deff) {
         if (this.hp < Constants.KNIGHT_LOWER_HP_BOUND * this.maxHp) {
             deff.applyStrategy(this);
-        }
-        else if (this.hp < Constants.KNIGHT_UPPER_HP_BOUND * this.maxHp) {
-            off.applyStrategy(this);
+        } else {
+            if (this.hp < Constants.KNIGHT_UPPER_HP_BOUND * this.maxHp) {
+                off.applyStrategy(this);
+            }
         }
     }
 
@@ -51,7 +51,8 @@ public class Knight extends Hero {
         float landMod = this.getLandModifier(land);
         int executeDmg = Math.round(this.execute * landMod);
         int slamDmg = Math.round(
-                Math.round(this.slam * (Constants.SLAM_APPLIED_TO_KNIGHT + this.angelModifier + this.stratModifier))
+                Math.round(this.slam * (Constants.SLAM_APPLIED_TO_KNIGHT
+                        + this.angelModifier + this.stratModifier))
                         * landMod);
         // Aplic root pentru o runa oponentului
         hero.debuff(0, true, 1);
@@ -74,10 +75,12 @@ public class Knight extends Hero {
         }
         float landMod = this.getLandModifier(land);
         int executeDmg = Math.round(
-                Math.round(this.execute * (Constants.EXECUTE_APPLIED_TO_PYRO + this.angelModifier + this.stratModifier))
+                Math.round(this.execute * (Constants.EXECUTE_APPLIED_TO_PYRO
+                        + this.angelModifier + this.stratModifier))
                         * landMod);
         int slamDmg = Math.round(
-                Math.round(this.slam * (Constants.SLAM_APPLIED_TO_PYRO + this.angelModifier + this.stratModifier))
+                Math.round(this.slam * (Constants.SLAM_APPLIED_TO_PYRO
+                        + this.angelModifier + this.stratModifier))
                         * landMod);
         // Aplic root pentru o runa oponentului
         hero.debuff(0, true, 1);
@@ -101,10 +104,12 @@ public class Knight extends Hero {
         }
         float landMod = this.getLandModifier(land);
         int executeDmg = Math.round(
-                Math.round(this.execute * (Constants.EXECUTE_APPLIED_TO_WIZ + this.angelModifier + this.stratModifier))
+                Math.round(this.execute * (Constants.EXECUTE_APPLIED_TO_WIZ
+                        + this.angelModifier + this.stratModifier))
                         * landMod);
         int slamDmg = Math.round(
-                Math.round(this.slam * (Constants.SLAM_APPLIED_TO_WIZ + this.angelModifier + this.stratModifier))
+                Math.round(this.slam * (Constants.SLAM_APPLIED_TO_WIZ
+                        + this.angelModifier + this.stratModifier))
                         * landMod);
         int dmgToDeflect = Math.round(this.execute * landMod) + Math.round(this.slam * landMod);
         // Setez damage-ul dat de erou catre wizard fara modificatorii de rasa (pentru deflect)
@@ -130,10 +135,12 @@ public class Knight extends Hero {
         }
         float landMod = this.getLandModifier(land);
         int executeDmg = Math.round(
-                Math.round(this.execute * (Constants.EXECUTE_APPLIED_TO_ROGUE + this.angelModifier + this.stratModifier))
+                Math.round(this.execute * (Constants.EXECUTE_APPLIED_TO_ROGUE
+                        + this.angelModifier + this.stratModifier))
                         * landMod);
         int slamDmg = Math.round(
-                Math.round(this.slam * (Constants.SLAM_APPLIED_TO_ROGUE + this.angelModifier + this.stratModifier))
+                Math.round(this.slam * (Constants.SLAM_APPLIED_TO_ROGUE
+                        + this.angelModifier + this.stratModifier))
                         * landMod);
         // Aplic root pentru o runa oponentului
         hero.debuff(0, true, 1);

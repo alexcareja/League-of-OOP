@@ -34,12 +34,13 @@ public class Wizard extends Hero {
     }
 
     @Override
-    public final void applyStrategy(Strategy off, Strategy deff) {
+    public final void applyStrategy(final Strategy off, final Strategy deff) {
         if (this.hp < Constants.WIZARD_LOWER_HP_BOUND * this.maxHp) {
             deff.applyStrategy(this);
-        }
-        else if (this.hp < Constants.WIZARD_UPPER_HP_BOUND * this.maxHp) {
-            off.applyStrategy(this);
+        } else {
+            if (this.hp < Constants.WIZARD_UPPER_HP_BOUND * this.maxHp) {
+                off.applyStrategy(this);
+            }
         }
     }
 
@@ -49,10 +50,12 @@ public class Wizard extends Hero {
         float landMod = this.getLandModifier(land);
         int drainDmg = Math.round(Math.round(Math.round(
                 this.drain * Math.min(Constants.DRAIN_MAX_HEALTH_MULT * heroMaxHp, hero.getHp()))
-                        * (Constants.DRAIN_APPLIED_TO_KNIGHT + this.angelModifier + this.stratModifier)) * landMod);
+                        * (Constants.DRAIN_APPLIED_TO_KNIGHT
+                + this.angelModifier + this.stratModifier)) * landMod);
         int deflectDmg = Math.round(Math.round(Math.round(
-                this.deflectFlatDmg * this.deflect) *
-                (Constants.DEFLECT_APPLIED_TO_KNIGHT + this.angelModifier + this.stratModifier)) * landMod);
+                this.deflectFlatDmg * this.deflect)
+                * (Constants.DEFLECT_APPLIED_TO_KNIGHT
+                        + this.angelModifier + this.stratModifier)) * landMod);
         // Aplic damage catre target (hero)
         hero.getHit(drainDmg + deflectDmg);
         if (hero.getHp() <= 0) {    // Verific daca a facut kill
@@ -68,10 +71,12 @@ public class Wizard extends Hero {
         float landMod = this.getLandModifier(land);
         int drainDmg = Math.round(Math.round(Math.round(
                 this.drain * Math.min(Constants.DRAIN_MAX_HEALTH_MULT * heroMaxHp, hero.getHp()))
-                * (Constants.DRAIN_APPLIED_TO_PYRO + this.angelModifier + this.stratModifier)) * landMod);
+                * (Constants.DRAIN_APPLIED_TO_PYRO
+                + this.angelModifier + this.stratModifier)) * landMod);
         int deflectDmg = Math.round(Math.round(Math.round(
-                this.deflectFlatDmg * this.deflect) *
-                (Constants.DEFLECT_APPLIED_TO_PYRO + this.angelModifier + this.stratModifier)) * landMod);
+                this.deflectFlatDmg * this.deflect)
+                * (Constants.DEFLECT_APPLIED_TO_PYRO
+                        + this.angelModifier + this.stratModifier)) * landMod);
         // Aplic damage catre target (hero)
         hero.getHit(drainDmg + deflectDmg);
         if (hero.getHp() <= 0) {    // Verific daca a facut kill
@@ -88,7 +93,8 @@ public class Wizard extends Hero {
         float landMod = this.getLandModifier(land);
         int drainDmg = Math.round(Math.round(Math.round(
                 this.drain * Math.min(Constants.DRAIN_MAX_HEALTH_MULT * heroMaxHp, hero.getHp()))
-                * (Constants.DRAIN_APPLIED_TO_WIZ + this.angelModifier + this.stratModifier)) * landMod);
+                * (Constants.DRAIN_APPLIED_TO_WIZ
+                + this.angelModifier + this.stratModifier)) * landMod);
         // Aplic damage catre target (hero)
         hero.getHit(drainDmg);
         if (hero.getHp() <= 0) {    // Verific daca a facut kill
@@ -103,10 +109,12 @@ public class Wizard extends Hero {
         float landMod = this.getLandModifier(land);
         int drainDmg = Math.round(Math.round(Math.round(
                 this.drain * Math.min(Constants.DRAIN_MAX_HEALTH_MULT * heroMaxHp, hero.getHp()))
-                * (Constants.DRAIN_APPLIED_TO_ROGUE + this.angelModifier + this.stratModifier)) * landMod);
+                * (Constants.DRAIN_APPLIED_TO_ROGUE
+                + this.angelModifier + this.stratModifier)) * landMod);
         int deflectDmg = Math.round(Math.round(Math.round(
-                this.deflectFlatDmg * this.deflect) *
-                (Constants.DEFLECT_APPLIED_TO_ROGUE + this.angelModifier + this.stratModifier)) * landMod);
+                this.deflectFlatDmg * this.deflect)
+                * (Constants.DEFLECT_APPLIED_TO_ROGUE
+                        + this.angelModifier + this.stratModifier)) * landMod);
         // Aplic damage catre target (hero)
         hero.getHit(drainDmg + deflectDmg);
         if (hero.getHp() <= 0) {    // Verific daca a facut kill

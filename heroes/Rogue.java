@@ -30,12 +30,13 @@ public class Rogue extends Hero {
     }
 
     @Override
-    public final void applyStrategy(Strategy off, Strategy deff) {
+    public final void applyStrategy(final Strategy off, final Strategy deff) {
         if (this.hp < Constants.ROGUE_LOWER_HP_BOUND * this.maxHp) {
             deff.applyStrategy(this);
-        }
-        else if (this.hp < Constants.ROGUE_UPPER_HP_BOUND * this.maxHp) {
-            off.applyStrategy(this);
+        } else {
+            if (this.hp < Constants.ROGUE_UPPER_HP_BOUND * this.maxHp) {
+                off.applyStrategy(this);
+            }
         }
     }
 
@@ -51,10 +52,12 @@ public class Rogue extends Hero {
         }
         float landMod = this.getLandModifier(land);
         int backstabDmg = Math.round(Math.round(Math.round(
-                this.backstab * (Constants.BACKSTAB_APPLIED_TO_KNIGHT + this.angelModifier + this.stratModifier))
+                this.backstab * (Constants.BACKSTAB_APPLIED_TO_KNIGHT
+                        + this.angelModifier + this.stratModifier))
                 * landMod) * backstabCrit);
         int paralysisDmg = Math.round(Math.round(
-                this.paralysis * (Constants.PARALYSIS_APPLIED_TO_KNIGHT + this.angelModifier + this.stratModifier))
+                this.paralysis * (Constants.PARALYSIS_APPLIED_TO_KNIGHT
+                        + this.angelModifier + this.stratModifier))
                 * landMod);
         // Aplic damage overtime si root
         hero.debuff(paralysisDmg, true, duration);
@@ -79,10 +82,12 @@ public class Rogue extends Hero {
         }
         float landMod = this.getLandModifier(land);
         int backstabDmg = Math.round(Math.round(Math.round(
-                this.backstab * (Constants.BACKSTAB_APPLIED_TO_PYRO + this.angelModifier + this.stratModifier))
+                this.backstab * (Constants.BACKSTAB_APPLIED_TO_PYRO
+                        + this.angelModifier + this.stratModifier))
                 * landMod) * backstabCrit);
         int paralysisDmg = Math.round(Math.round(
-                this.paralysis * (Constants.PARALYSIS_APPLIED_TO_PYRO + this.angelModifier + this.stratModifier))
+                this.paralysis * (Constants.PARALYSIS_APPLIED_TO_PYRO
+                        + this.angelModifier + this.stratModifier))
                 * landMod);
         // Aplic damage overtime si root
         hero.debuff(paralysisDmg, true, duration);
@@ -107,10 +112,12 @@ public class Rogue extends Hero {
         }
         float landMod = this.getLandModifier(land);
         int backstabDmg = Math.round(Math.round(Math.round(
-                this.backstab * (Constants.BACKSTAB_APPLIED_TO_WIZ + this.angelModifier + this.stratModifier))
+                this.backstab * (Constants.BACKSTAB_APPLIED_TO_WIZ
+                        + this.angelModifier + this.stratModifier))
                 * landMod) * backstabCrit);
         int paralysisDmg = Math.round(Math.round(
-                this.paralysis * (Constants.PARALYSIS_APPLIED_TO_WIZ + this.angelModifier + this.stratModifier))
+                this.paralysis * (Constants.PARALYSIS_APPLIED_TO_WIZ
+                        + this.angelModifier + this.stratModifier))
                 * landMod);
         int dmgToDeflect = Math.round(Math.round(this.backstab * landMod) * backstabCrit)
                 + Math.round(this.paralysis * landMod);
@@ -139,10 +146,12 @@ public class Rogue extends Hero {
         }
         float landMod = this.getLandModifier(land);
         int backstabDmg = Math.round(Math.round(Math.round(
-                this.backstab * (Constants.BACKSTAB_APPLIED_TO_ROGUE + this.angelModifier + this.stratModifier))
+                this.backstab * (Constants.BACKSTAB_APPLIED_TO_ROGUE
+                        + this.angelModifier + this.stratModifier))
                 * landMod) * backstabCrit);
         int paralysisDmg = Math.round(Math.round(
-                this.paralysis * (Constants.PARALYSIS_APPLIED_TO_ROGUE + this.angelModifier + this.stratModifier))
+                this.paralysis * (Constants.PARALYSIS_APPLIED_TO_ROGUE
+                        + this.angelModifier + this.stratModifier))
                 * landMod);
         // Aplic damage overtime si root
         hero.debuff(paralysisDmg, true, duration);

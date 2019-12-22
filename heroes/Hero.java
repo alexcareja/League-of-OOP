@@ -20,8 +20,8 @@ public abstract class Hero extends Observable implements Visitor, Visitable {
     protected int debuffDamage;
     protected boolean isRooted = false;
     protected int debuffDuration = 0;
-    protected float angelModifier = 0f;
-    protected float stratModifier = 0f;
+    protected float angelModifier = 0;
+    protected float stratModifier = 0;
     private ArrayList<Observer> observers = new ArrayList<>();
 
     public final int getId() {
