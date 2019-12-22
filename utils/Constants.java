@@ -157,6 +157,31 @@ public final class Constants {
     public static final String SPAWNER = "Spawner";
     public static final String THEDOOMER = "TheDoomer";
     public static final String XPANGEL = "XPAngel";
+    // Strategy constants
+    public static final float KNIGHT_UPPER_HP_BOUND = 1/2f;
+    public static final float KNIGHT_LOWER_HP_BOUND = 1/3f;
+    public static final float KNIGHT_DEFF_HEAL = 1/4f;
+    public static final float KNIGHT_OFF_HEAL = -1/5f;
+    public static final float KNIGHT_DEFF_DMG = -0.2f;
+    public static final float KNIGHT_OFF_DMG = 0.5f;
+    public static final float PYRO_UPPER_HP_BOUND = 1/3f;
+    public static final float PYRO_LOWER_HP_BOUND = 1/4f;
+    public static final float PYRO_DEFF_HEAL = 1/3f;
+    public static final float PYRO_OFF_HEAL = -1/4f;
+    public static final float PYRO_DEFF_DMG = -0.3f;
+    public static final float PYRO_OFF_DMG = 0.7f;
+    public static final float ROGUE_UPPER_HP_BOUND = 1/5f;
+    public static final float ROGUE_LOWER_HP_BOUND = 1/7f;
+    public static final float ROGUE_DEFF_HEAL = 1/2f;
+    public static final float ROGUE_OFF_HEAL = -1/7f;
+    public static final float ROGUE_DEFF_DMG = -0.1f;
+    public static final float ROGUE_OFF_DMG = 0.4f;
+    public static final float WIZARD_UPPER_HP_BOUND = 1/2f;
+    public static final float WIZARD_LOWER_HP_BOUND = 1/4f;
+    public static final float WIZARD_DEFF_HEAL = 1/5f;
+    public static final float WIZARD_OFF_HEAL = -1/10f;
+    public static final float WIZARD_DEFF_DMG = -0.2f;
+    public static final float WIZARD_OFF_DMG = 0.6f;
 
     private Constants() {
     }

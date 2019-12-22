@@ -1,5 +1,6 @@
 package heroes;
 
+import strategies.Strategy;
 import utils.Constants;
 import map.LandType;
 import visitor.Visitable;
@@ -19,7 +20,8 @@ public abstract class Hero extends Observable implements Visitor, Visitable {
     protected int debuffDamage;
     protected boolean isRooted = false;
     protected int debuffDuration = 0;
-    protected float angelModifier = 0;
+    protected float angelModifier = 0f;
+    protected float stratModifier = 0f;
     private ArrayList<Observer> observers = new ArrayList<>();
 
     public final int getId() {
@@ -32,6 +34,10 @@ public abstract class Hero extends Observable implements Visitor, Visitable {
 
     public final int getHp() {
         return this.hp;
+    }
+
+    public final int getMaxHp() {
+        return this.maxHp;
     }
 
     public final boolean isRooted() {
@@ -76,6 +82,10 @@ public abstract class Hero extends Observable implements Visitor, Visitable {
 
     public final void modAngelModifier(final float x) {
         this.angelModifier += x;
+    }
+
+    public final void setStratModifier(final float x) {
+        this.stratModifier = x;
     }
 
     public final void gainExperience(final int exp) {
@@ -126,6 +136,8 @@ public abstract class Hero extends Observable implements Visitor, Visitable {
      *          respectiva daca se afla pe taramul cu bonus
      */
     public abstract float getLandModifier(LandType land);
+
+    public abstract void applyStrategy(Strategy off, Strategy deff);
 
     public abstract void levelUp();
 

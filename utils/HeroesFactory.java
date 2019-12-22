@@ -19,7 +19,7 @@ public final class HeroesFactory {
         return instance;
     }
 
-    public Hero getHeroByChar(final char c, int id) {
+    public Hero getHeroByChar(final char c, final int id) {
         switch (c) {
             case 'W':
                 return new Wizard(id);

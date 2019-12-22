@@ -1,6 +1,9 @@
 package map;
 
 import angels.Spawner;
+import strategies.DeffensiveStrategy;
+import strategies.OffensiveStrategy;
+import strategies.Strategy;
 import utils.Constants;
 import angels.Angel;
 import fileio.FileSystem;
@@ -8,7 +11,11 @@ import heroes.Hero;
 import heroes.Wizard;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Observable;
+import java.util.Observer;
 
 public final class GameMap extends Observable {
     private static GameMap instance = null;
@@ -16,6 +23,8 @@ public final class GameMap extends Observable {
     private int m;
     private LandType[][] map;
     private Map<Hero, Integer> playersPositions;
+    private Strategy offensiveStrategy;
+    private Strategy deffensiveStrategy;
     private ArrayList<Observer> observers;
     /*
      * Pozitiile jucatorilor sunt reprezentate pe un int astfel: x*m + y, unde m este numarul de
@@ -49,6 +58,8 @@ public final class GameMap extends Observable {
             }
         }
         this.playersPositions = new HashMap<>();
+        this.offensiveStrategy = OffensiveStrategy.getInstance();
+        this.deffensiveStrategy = DeffensiveStrategy.getInstance();
     }
 
     public static GameMap getInstance(final int n, final int m, final FileSystem fileReader)
@@ -108,9 +119,11 @@ public final class GameMap extends Observable {
                 h1 = h2;
                 h2 = h3;
             }
+            h1.applyStrategy(this.offensiveStrategy, this.deffensiveStrategy);
+            h2.applyStrategy(this.offensiveStrategy, this.deffensiveStrategy);
             h2.accept(h1, this.map[i / this.m][i % this.m]);
             h1.accept(h2, this.map[i / this.m][i % this.m]);
-            if(h1.getId() < h2.getId()) {
+            if (h1.getId() < h2.getId()) {
                 Hero h3 = h1;
                 h1 = h2;
                 h2 = h3;
@@ -143,7 +156,7 @@ public final class GameMap extends Observable {
         for (Hero h : heroes) {
             wasAlive = !h.isDead();
             if (playersPositions.get(h) == x * this.m + y) {
-                if(h.isDead() && !(angel instanceof Spawner)) {
+                if (h.isDead() && !(angel instanceof Spawner)) {
                     continue;
                 }
                 arg.add(angel.getAction());
@@ -166,12 +179,12 @@ public final class GameMap extends Observable {
     }
 
     @Override
-    public final synchronized void addObserver(final Observer o) {
+    public synchronized void addObserver(final Observer o) {
         this.observers.add(o);
     }
 
     @Override
-    public final void notifyObservers(final Object arg) {
+    public void notifyObservers(final Object arg) {
         for (Observer o : this.observers) {
             o.update(this, arg);
         }

@@ -1,5 +1,6 @@
 package heroes;
 
+import strategies.Strategy;
 import utils.Constants;
 import map.LandType;
 import visitor.Visitor;
@@ -33,13 +34,25 @@ public class Wizard extends Hero {
     }
 
     @Override
+    public final void applyStrategy(Strategy off, Strategy deff) {
+        if (this.hp < Constants.WIZARD_LOWER_HP_BOUND * this.maxHp) {
+            deff.applyStrategy(this);
+        }
+        else if (this.hp < Constants.WIZARD_UPPER_HP_BOUND * this.maxHp) {
+            off.applyStrategy(this);
+        }
+    }
+
+    @Override
     public final void visit(final Knight hero, final LandType land) {
-        int heroMaxHp = Constants.KNIGHT_INIT_HP + hero.getLevel() * Constants.KNIGHT_HP_GROWTH;
+        int heroMaxHp = hero.getMaxHp();
         float landMod = this.getLandModifier(land);
-        int drainDmg = Math.round(this.drain * Math.min(Constants.DRAIN_MAX_HEALTH_MULT
-                * heroMaxHp, hero.getHp()) * landMod * Constants.DRAIN_APPLIED_TO_KNIGHT);
-        int deflectDmg = Math.round(this.deflectFlatDmg * this.deflect
-                * Constants.DEFLECT_APPLIED_TO_KNIGHT * landMod);
+        int drainDmg = Math.round(Math.round(Math.round(
+                this.drain * Math.min(Constants.DRAIN_MAX_HEALTH_MULT * heroMaxHp, hero.getHp()))
+                        * (Constants.DRAIN_APPLIED_TO_KNIGHT + this.angelModifier + this.stratModifier)) * landMod);
+        int deflectDmg = Math.round(Math.round(Math.round(
+                this.deflectFlatDmg * this.deflect) *
+                (Constants.DEFLECT_APPLIED_TO_KNIGHT + this.angelModifier + this.stratModifier)) * landMod);
         // Aplic damage catre target (hero)
         hero.getHit(drainDmg + deflectDmg);
         if (hero.getHp() <= 0) {    // Verific daca a facut kill
@@ -51,12 +64,14 @@ public class Wizard extends Hero {
 
     @Override
     public final void visit(final Pyromancer hero, final LandType land) {
-        int heroMaxHp = Constants.PYRO_INIT_HP + hero.getLevel() * Constants.PYRO_HP_GROWTH;
+        int heroMaxHp = hero.getMaxHp();
         float landMod = this.getLandModifier(land);
-        int drainDmg = Math.round(this.drain * Math.min(Constants.DRAIN_MAX_HEALTH_MULT
-                * heroMaxHp, hero.getHp()) * landMod * Constants.DRAIN_APPLIED_TO_PYRO);
-        int deflectDmg = Math.round(this.deflectFlatDmg * this.deflect
-                * Constants.DEFLECT_APPLIED_TO_PYRO * landMod);
+        int drainDmg = Math.round(Math.round(Math.round(
+                this.drain * Math.min(Constants.DRAIN_MAX_HEALTH_MULT * heroMaxHp, hero.getHp()))
+                * (Constants.DRAIN_APPLIED_TO_PYRO + this.angelModifier + this.stratModifier)) * landMod);
+        int deflectDmg = Math.round(Math.round(Math.round(
+                this.deflectFlatDmg * this.deflect) *
+                (Constants.DEFLECT_APPLIED_TO_PYRO + this.angelModifier + this.stratModifier)) * landMod);
         // Aplic damage catre target (hero)
         hero.getHit(drainDmg + deflectDmg);
         if (hero.getHp() <= 0) {    // Verific daca a facut kill
@@ -69,10 +84,11 @@ public class Wizard extends Hero {
     @Override
     public final void visit(final Wizard hero, final LandType land) {
         this.deflectFlatDmg = 0;
-        int heroMaxHp = Constants.WIZ_INIT_HP + hero.getLevel() * Constants.WIZ_HP_GROWTH;
+        int heroMaxHp = hero.getMaxHp();
         float landMod = this.getLandModifier(land);
-        int drainDmg = Math.round(this.drain * Math.min(Constants.DRAIN_MAX_HEALTH_MULT
-                * heroMaxHp, hero.getHp()) * landMod * Constants.DRAIN_APPLIED_TO_WIZ);
+        int drainDmg = Math.round(Math.round(Math.round(
+                this.drain * Math.min(Constants.DRAIN_MAX_HEALTH_MULT * heroMaxHp, hero.getHp()))
+                * (Constants.DRAIN_APPLIED_TO_WIZ + this.angelModifier + this.stratModifier)) * landMod);
         // Aplic damage catre target (hero)
         hero.getHit(drainDmg);
         if (hero.getHp() <= 0) {    // Verific daca a facut kill
@@ -83,12 +99,14 @@ public class Wizard extends Hero {
 
     @Override
     public final void visit(final Rogue hero, final LandType land) {
-        int heroMaxHp = Constants.ROGUE_INIT_HP + hero.getLevel() * Constants.ROGUE_HP_GROWTH;
+        int heroMaxHp = hero.getMaxHp();
         float landMod = this.getLandModifier(land);
-        int drainDmg = Math.round(this.drain * Math.min(Constants.DRAIN_MAX_HEALTH_MULT
-                * heroMaxHp, hero.getHp()) * landMod * Constants.DRAIN_APPLIED_TO_ROGUE);
-        int deflectDmg = Math.round(this.deflectFlatDmg * this.deflect
-                * Constants.DEFLECT_APPLIED_TO_ROGUE * landMod);
+        int drainDmg = Math.round(Math.round(Math.round(
+                this.drain * Math.min(Constants.DRAIN_MAX_HEALTH_MULT * heroMaxHp, hero.getHp()))
+                * (Constants.DRAIN_APPLIED_TO_ROGUE + this.angelModifier + this.stratModifier)) * landMod);
+        int deflectDmg = Math.round(Math.round(Math.round(
+                this.deflectFlatDmg * this.deflect) *
+                (Constants.DEFLECT_APPLIED_TO_ROGUE + this.angelModifier + this.stratModifier)) * landMod);
         // Aplic damage catre target (hero)
         hero.getHit(drainDmg + deflectDmg);
         if (hero.getHp() <= 0) {    // Verific daca a facut kill
@@ -116,7 +134,7 @@ public class Wizard extends Hero {
         ArrayList<String> arg = new ArrayList<>();
         boolean leveledUp = false;
         while (this.level < i) {
-            this.level ++;
+            this.level++;
             leveledUp = true;
             arg.add(Constants.LVLUP);
             arg.add(this.getHeroType());

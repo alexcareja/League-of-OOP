@@ -1,5 +1,6 @@
 package heroes;
 
+import strategies.Strategy;
 import utils.Constants;
 import map.LandType;
 import visitor.Visitor;
@@ -31,12 +32,27 @@ public class Pyromancer extends Hero {
     }
 
     @Override
+    public final void applyStrategy(Strategy off, Strategy deff) {
+        if (this.hp < Constants.PYRO_LOWER_HP_BOUND * this.maxHp) {
+            deff.applyStrategy(this);
+        }
+        else if (this.hp < Constants.PYRO_UPPER_HP_BOUND * this.maxHp) {
+            off.applyStrategy(this);
+        }
+    }
+
+    @Override
     public final void visit(final Knight hero, final LandType land) {
         float landMod = this.getLandModifier(land);
-        int fireblastDmg = Math.round(this.fireblast
-                * Constants.FIREBLAST_APPLIED_TO_KNIGHT * landMod);
-        int igniteDmg = Math.round(this.ignite * Constants.IGNITE_APPLIED_TO_KNIGHT * landMod);
-        int igniteDot = Math.round(this.igniteOt * Constants.IGNITE_APPLIED_TO_KNIGHT * landMod);
+        int fireblastDmg = Math.round(
+                Math.round(this.fireblast *
+                        (Constants.FIREBLAST_APPLIED_TO_KNIGHT + this.angelModifier + this.stratModifier)) * landMod);
+        int igniteDmg = Math.round(
+                Math.round(this.ignite *
+                        (Constants.IGNITE_APPLIED_TO_KNIGHT + this.angelModifier + this.stratModifier)) * landMod);
+        int igniteDot = Math.round(
+                Math.round(this.igniteOt *
+                        (Constants.IGNITE_APPLIED_TO_KNIGHT + this.angelModifier + this.stratModifier)) * landMod);
         // Aplic damage overtime
         hero.debuff(igniteDot, false, igniteDuration);
         // Aplic damage catre target (hero)
@@ -50,10 +66,15 @@ public class Pyromancer extends Hero {
     @Override
     public final void visit(final Pyromancer hero, final LandType land) {
         float landMod = this.getLandModifier(land);
-        int fireblastDmg = Math.round(this.fireblast
-                * Constants.FIREBLAST_APPLIED_TO_PYRO * landMod);
-        int igniteDmg = Math.round(this.ignite * Constants.IGNITE_APPLIED_TO_PYRO * landMod);
-        int igniteDot = Math.round(this.igniteOt * Constants.IGNITE_APPLIED_TO_PYRO * landMod);
+        int fireblastDmg = Math.round(
+                Math.round(this.fireblast *
+                        (Constants.FIREBLAST_APPLIED_TO_PYRO + this.angelModifier + this.stratModifier)) * landMod);
+        int igniteDmg = Math.round(
+                Math.round(this.ignite *
+                        (Constants.IGNITE_APPLIED_TO_PYRO + this.angelModifier + this.stratModifier)) * landMod);
+        int igniteDot = Math.round(
+                Math.round(this.igniteOt *
+                        (Constants.IGNITE_APPLIED_TO_PYRO + this.angelModifier + this.stratModifier)) * landMod);
         // Aplic damage overtime
         hero.debuff(igniteDot, false, igniteDuration);
         // Aplic damage catre target (hero)
@@ -67,10 +88,15 @@ public class Pyromancer extends Hero {
     @Override
     public final void visit(final Wizard hero, final LandType land) {
         float landMod = this.getLandModifier(land);
-        int fireblastDmg = Math.round(this.fireblast
-                * Constants.FIREBLAST_APPLIED_TO_WIZ * landMod);
-        int igniteDmg = Math.round(this.ignite * Constants.IGNITE_APPLIED_TO_WIZ * landMod);
-        int igniteDot = Math.round(this.igniteOt * Constants.IGNITE_APPLIED_TO_WIZ * landMod);
+        int fireblastDmg = Math.round(
+                Math.round(this.fireblast *
+                        (Constants.FIREBLAST_APPLIED_TO_WIZ + this.angelModifier + this.stratModifier)) * landMod);
+        int igniteDmg = Math.round(
+                Math.round(this.ignite *
+                        (Constants.IGNITE_APPLIED_TO_WIZ + this.angelModifier + this.stratModifier))  * landMod);
+        int igniteDot = Math.round(
+                Math.round(this.igniteOt *
+                        (Constants.IGNITE_APPLIED_TO_WIZ + this.angelModifier + this.stratModifier)) * landMod);
         // Aplic damage overtime
         hero.debuff(igniteDot, false, igniteDuration);
         int dmgToDeflect = Math.round(this.fireblast * landMod)
@@ -88,10 +114,15 @@ public class Pyromancer extends Hero {
     @Override
     public final void visit(final Rogue hero, final LandType land) {
         float landMod = this.getLandModifier(land);
-        int fireblastDmg = Math.round(this.fireblast
-                * Constants.FIREBLAST_APPLIED_TO_ROGUE * landMod);
-        int igniteDmg = Math.round(this.ignite * Constants.IGNITE_APPLIED_TO_ROGUE * landMod);
-        int igniteDot = Math.round(this.igniteOt * Constants.IGNITE_APPLIED_TO_ROGUE * landMod);
+        int fireblastDmg = Math.round(
+                Math.round(this.fireblast *
+                        (Constants.FIREBLAST_APPLIED_TO_ROGUE + this.angelModifier + this.stratModifier)) * landMod);
+        int igniteDmg = Math.round(
+                Math.round(this.ignite *
+                        (Constants.IGNITE_APPLIED_TO_ROGUE * + this.angelModifier + this.stratModifier)) * landMod);
+        int igniteDot = Math.round(
+                Math.round(this.igniteOt *
+                        (Constants.IGNITE_APPLIED_TO_ROGUE * this.angelModifier + this.stratModifier)) * landMod);
         // Aplic damage overtime
         hero.debuff(igniteDot, false, igniteDuration);
         // Aplic damage catre target (hero)
@@ -120,7 +151,7 @@ public class Pyromancer extends Hero {
         ArrayList<String> arg = new ArrayList<>();
         boolean leveledUp = false;
         while (this.level < i) {
-            this.level ++;
+            this.level++;
             leveledUp = true;
             arg.add(Constants.LVLUP);
             arg.add(this.getHeroType());

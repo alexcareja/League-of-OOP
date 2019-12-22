@@ -1,5 +1,6 @@
 package heroes;
 
+import strategies.Strategy;
 import utils.Constants;
 import map.LandType;
 import visitor.Visitor;
@@ -29,9 +30,18 @@ public class Knight extends Hero {
     }
 
     @Override
+    public final void applyStrategy(Strategy off, Strategy deff) {
+        if (this.hp < Constants.KNIGHT_LOWER_HP_BOUND * this.maxHp) {
+            deff.applyStrategy(this);
+        }
+        else if (this.hp < Constants.KNIGHT_UPPER_HP_BOUND * this.maxHp) {
+            off.applyStrategy(this);
+        }
+    }
+
+    @Override
     public final void visit(final Knight hero, final LandType land) {
-        if (hero.getHp() < this.executePercentage
-                * (hero.getLevel() * Constants.KNIGHT_HP_GROWTH + Constants.KNIGHT_INIT_HP)) {
+        if (hero.getHp() < this.executePercentage * hero.getMaxHp()) {
             // execute hero
             hero.getHit(hero.getHp());
             this.experience += Math.max(0, Constants.WIN_EXPERIENCE
@@ -40,7 +50,9 @@ public class Knight extends Hero {
         }
         float landMod = this.getLandModifier(land);
         int executeDmg = Math.round(this.execute * landMod);
-        int slamDmg = Math.round(this.slam * Constants.SLAM_APPLIED_TO_KNIGHT * landMod);
+        int slamDmg = Math.round(
+                Math.round(this.slam * (Constants.SLAM_APPLIED_TO_KNIGHT + this.angelModifier + this.stratModifier))
+                        * landMod);
         // Aplic root pentru o runa oponentului
         hero.debuff(0, true, 1);
         // Aplic damage catre target (hero)
@@ -53,8 +65,7 @@ public class Knight extends Hero {
 
     @Override
     public final void visit(final Pyromancer hero, final LandType land) {
-        if (hero.getHp() < this.executePercentage
-                * (hero.getLevel() * Constants.PYRO_HP_GROWTH + Constants.PYRO_INIT_HP)) {
+        if (hero.getHp() < this.executePercentage * hero.getMaxHp()) {
             // execute hero
             hero.getHit(hero.getHp());
             this.experience += Math.max(0, Constants.WIN_EXPERIENCE
@@ -62,8 +73,12 @@ public class Knight extends Hero {
             return;
         }
         float landMod = this.getLandModifier(land);
-        int executeDmg = Math.round(this.execute * Constants.EXECUTE_APPLIED_TO_PYRO * landMod);
-        int slamDmg = Math.round(this.slam * Constants.SLAM_APPLIED_TO_PYRO * landMod);
+        int executeDmg = Math.round(
+                Math.round(this.execute * (Constants.EXECUTE_APPLIED_TO_PYRO + this.angelModifier + this.stratModifier))
+                        * landMod);
+        int slamDmg = Math.round(
+                Math.round(this.slam * (Constants.SLAM_APPLIED_TO_PYRO + this.angelModifier + this.stratModifier))
+                        * landMod);
         // Aplic root pentru o runa oponentului
         hero.debuff(0, true, 1);
         // Aplic damage catre target (hero)
@@ -76,8 +91,7 @@ public class Knight extends Hero {
 
     @Override
     public final void visit(final Wizard hero, final LandType land) {
-        if (hero.getHp() < this.executePercentage
-                * (hero.getLevel() * Constants.WIZ_HP_GROWTH + Constants.WIZ_INIT_HP)) {
+        if (hero.getHp() < this.executePercentage * hero.getMaxHp()) {
             // execute hero
             hero.setDmgToDeflect(hero.getHp());
             hero.getHit(hero.getHp());
@@ -86,12 +100,16 @@ public class Knight extends Hero {
             return;
         }
         float landMod = this.getLandModifier(land);
-        int executeDmg = Math.round(this.execute * Constants.EXECUTE_APPLIED_TO_WIZ * landMod);
-        int slamDmg = Math.round(this.slam * Constants.SLAM_APPLIED_TO_WIZ * landMod);
+        int executeDmg = Math.round(
+                Math.round(this.execute * (Constants.EXECUTE_APPLIED_TO_WIZ + this.angelModifier + this.stratModifier))
+                        * landMod);
+        int slamDmg = Math.round(
+                Math.round(this.slam * (Constants.SLAM_APPLIED_TO_WIZ + this.angelModifier + this.stratModifier))
+                        * landMod);
         int dmgToDeflect = Math.round(this.execute * landMod) + Math.round(this.slam * landMod);
         // Setez damage-ul dat de erou catre wizard fara modificatorii de rasa (pentru deflect)
         hero.setDmgToDeflect(dmgToDeflect);
-        // Aplic root pentru o runa oponentului
+        // Aplic root pentru o runda oponentului
         hero.debuff(0, true, 1);
         // Aplic damage catre target (hero)
         hero.getHit(executeDmg + slamDmg);
@@ -103,8 +121,7 @@ public class Knight extends Hero {
 
     @Override
     public final void visit(final Rogue hero, final LandType land) {
-        if (hero.getHp() < this.executePercentage
-                * (hero.getLevel() * Constants.ROGUE_HP_GROWTH + Constants.ROGUE_INIT_HP)) {
+        if (hero.getHp() < this.executePercentage * hero.getMaxHp()) {
             // execute hero
             hero.getHit(hero.getHp());
             this.experience += Math.max(0, Constants.WIN_EXPERIENCE
@@ -112,8 +129,12 @@ public class Knight extends Hero {
             return;
         }
         float landMod = this.getLandModifier(land);
-        int executeDmg = Math.round(this.execute * Constants.EXECUTE_APPLIED_TO_ROGUE * landMod);
-        int slamDmg = Math.round(this.slam * Constants.SLAM_APPLIED_TO_ROGUE * landMod);
+        int executeDmg = Math.round(
+                Math.round(this.execute * (Constants.EXECUTE_APPLIED_TO_ROGUE + this.angelModifier + this.stratModifier))
+                        * landMod);
+        int slamDmg = Math.round(
+                Math.round(this.slam * (Constants.SLAM_APPLIED_TO_ROGUE + this.angelModifier + this.stratModifier))
+                        * landMod);
         // Aplic root pentru o runa oponentului
         hero.debuff(0, true, 1);
         // Aplic damage catre target (hero)
@@ -142,7 +163,7 @@ public class Knight extends Hero {
         ArrayList<String> arg = new ArrayList<>();
         boolean leveledUp = false;
         while (this.level < i) {
-            this.level ++;
+            this.level++;
             leveledUp = true;
             arg.add(Constants.LVLUP);
             arg.add(this.getHeroType());
