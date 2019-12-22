@@ -142,7 +142,10 @@ public final class Constants {
     public static final String SPAWN = "SPAWN";
     public static final String HELP = "HELP";
     public static final String HIT = "HIT";
-    public static final String DIED = "DIED";
+    public static final String PKILLED = "PKILLED";   // Player kills player
+    public static final String AKILLED = "AKILLED";       // Angel kills player
+    public static final String LVLUP = "LVLUP";
+    public static final String REVIVE = "REVIVE";
     // Angel Types
     public static final String DAMAGEANGEL = "DamageAngel";
     public static final String DARKANGEL = "DarkAngel";

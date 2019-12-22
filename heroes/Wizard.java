@@ -4,6 +4,8 @@ import utils.Constants;
 import map.LandType;
 import visitor.Visitor;
 
+import java.util.ArrayList;
+
 public class Wizard extends Hero {
     private float drain;
     private float deflect;
@@ -107,13 +109,25 @@ public class Wizard extends Hero {
             return;
         }
         int i = 0;
-        while (this.experience >= Constants.LEVEL_ONE_EXPERIENCE
-                + i * Constants.EXPERIENCE_PER_LEVEL) {
+        while (this.experience >= Constants.LEVEL_ONE_EXPERIENCE + i
+                * Constants.EXPERIENCE_PER_LEVEL) {
             i++;
         }
-        if (i > this.level) {
+        ArrayList<String> arg = new ArrayList<>();
+        boolean leveledUp = false;
+        while (this.level < i) {
+            this.level ++;
+            leveledUp = true;
+            arg.add(Constants.LVLUP);
+            arg.add(this.getHeroType());
+            arg.add(Integer.toString(this.id));
+            arg.add(Integer.toString(this.level));
+            this.notifyObservers(arg);
+            arg.clear();
+        }
+        if (leveledUp) {
             // Creste damage-ul si viata proportional cu nivelul si intoarce eroul la full hp
-            this.level = i;
+            //this.level = i;
             this.hp = Constants.WIZ_INIT_HP + i * Constants.WIZ_HP_GROWTH;
             this.maxHp = this.hp;
             this.drain = Constants.DRAIN_FLAT_PERCENTAGE + i * Constants.DRAIN_PERCENT_PER_LEVEL;

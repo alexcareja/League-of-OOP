@@ -49,10 +49,37 @@ public final class GrandWizard implements Observer {
                     e.printStackTrace();
                 }
                 break;
-            case Constants.DIED:
+            case Constants.PKILLED:
                 try {
                     fileSystem.writeWord("Player " + args.get(1) + " " + args.get(2)
                             + " was killed by " + args.get(3) + " " + args.get(4));
+                    fileSystem.writeNewLine();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case Constants.AKILLED:
+                try {
+                    fileSystem.writeWord("Player " + args.get(1) + " " + args.get(2)
+                            + " was killed by an angel");
+                    fileSystem.writeNewLine();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case Constants.LVLUP:
+                try {
+                    fileSystem.writeWord(args.get(1) + " " + args.get(2)
+                            + " reached level " + args.get(3));
+                    fileSystem.writeNewLine();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case Constants.REVIVE:
+                try {
+                    fileSystem.writeWord("Player " + args.get(1) + " " + args.get(2)
+                            + " was brought to life by an angel");
                     fileSystem.writeNewLine();
                 } catch (IOException e) {
                     e.printStackTrace();

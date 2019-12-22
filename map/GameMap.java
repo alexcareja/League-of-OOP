@@ -1,5 +1,6 @@
 package map;
 
+import angels.Spawner;
 import utils.Constants;
 import angels.Angel;
 import fileio.FileSystem;
@@ -115,7 +116,7 @@ public final class GameMap extends Observable {
                 h2 = h3;
             }
             if (h1.getHp() <= 0) {
-                arg.add(Constants.DIED);
+                arg.add(Constants.PKILLED);
                 arg.add(h1.getHeroType());
                 arg.add(Integer.toString(h1.getId()));
                 arg.add(h2.getHeroType());
@@ -124,12 +125,13 @@ public final class GameMap extends Observable {
                 arg.clear();
             }
             if (h2.getHp() <= 0) {
-                arg.add(Constants.DIED);
+                arg.add(Constants.PKILLED);
                 arg.add(h2.getHeroType());
                 arg.add(Integer.toString(h2.getId()));
                 arg.add(h1.getHeroType());
                 arg.add(Integer.toString(h1.getId()));
                 this.notifyObservers(arg);
+                arg.clear();
             }
         }
     }
@@ -140,14 +142,17 @@ public final class GameMap extends Observable {
         boolean wasAlive;
         for (Hero h : heroes) {
             wasAlive = !h.isDead();
-            if (playersPositions.get(h) == x * this.m + y && wasAlive) {
-                h.accept(angel, null);
+            if (playersPositions.get(h) == x * this.m + y) {
+                if(h.isDead() && !(angel instanceof Spawner)) {
+                    continue;
+                }
                 arg.add(angel.getAction());
                 arg.add(h.getHeroType());
                 arg.add(Integer.toString(h.getId()));
                 angel.notifyObservers(arg);
-                if (h.isDead()) {
-                    arg.set(0, Constants.DIED);
+                h.accept(angel, null);
+                if (h.isDead() && wasAlive) {
+                    arg.set(0, Constants.AKILLED);
                     angel.notifyObservers(arg);
                 }
                 arg.clear();

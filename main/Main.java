@@ -39,6 +39,7 @@ public final class Main {
         for (int i = 0; i < noHeroes; i++) {
             String type = fileSystem.nextWord();
             hero = heroesFactory.getHeroByChar(type.charAt(0), i);
+            hero.addObserver(grandWizard);
             heroes.add(hero);
             x = fileSystem.nextInt();
             y = fileSystem.nextInt();

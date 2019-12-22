@@ -4,6 +4,8 @@ import utils.Constants;
 import map.LandType;
 import visitor.Visitor;
 
+import java.util.ArrayList;
+
 public class Knight extends Hero {
     private int execute;
     private float executePercentage;
@@ -137,7 +139,19 @@ public class Knight extends Hero {
                 * Constants.EXPERIENCE_PER_LEVEL) {
             i++;
         }
-        if (i > this.level) {
+        ArrayList<String> arg = new ArrayList<>();
+        boolean leveledUp = false;
+        while (this.level < i) {
+            this.level ++;
+            leveledUp = true;
+            arg.add(Constants.LVLUP);
+            arg.add(this.getHeroType());
+            arg.add(Integer.toString(this.id));
+            arg.add(Integer.toString(this.level));
+            this.notifyObservers(arg);
+            arg.clear();
+        }
+        if (leveledUp) {
             // Creste damage-ul si viata proportional cu nivelul si intoarce eroul la full hp
             this.level = i;
             this.hp = Constants.KNIGHT_INIT_HP + i * Constants.KNIGHT_HP_GROWTH;

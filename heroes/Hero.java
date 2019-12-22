@@ -5,7 +5,11 @@ import map.LandType;
 import visitor.Visitable;
 import visitor.Visitor;
 
-public abstract class Hero implements Visitor, Visitable {
+import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
+
+public abstract class Hero extends Observable implements Visitor, Visitable {
     protected int experience;
     protected int id;
     protected int hp;
@@ -16,6 +20,7 @@ public abstract class Hero implements Visitor, Visitable {
     protected boolean isRooted = false;
     protected int debuffDuration = 0;
     protected float angelModifier = 0;
+    private ArrayList<Observer> observers = new ArrayList<>();
 
     public final int getId() {
         return this.id;
@@ -85,8 +90,13 @@ public abstract class Hero implements Visitor, Visitable {
     }
 
     public final void revive(final int heal) {
+        ArrayList<String> arg = new ArrayList<>();
         this.hp = heal;
         this.isDead = false;
+        arg.add(Constants.REVIVE);
+        arg.add(this.getHeroType());
+        arg.add(Integer.toString(this.id));
+        this.notifyObservers(arg);
     }
 
     public final String getStatus() {
@@ -96,6 +106,18 @@ public abstract class Hero implements Visitor, Visitable {
                 + " "
                 + this.hp
                 + " ";
+    }
+
+    @Override
+    public final synchronized void addObserver(final Observer o) {
+        this.observers.add(o);
+    }
+
+    @Override
+    public final void notifyObservers(final Object arg) {
+        for (Observer o : this.observers) {
+            o.update(this, arg);
+        }
     }
 
     /**
