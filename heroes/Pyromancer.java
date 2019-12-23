@@ -62,7 +62,7 @@ public class Pyromancer extends Hero {
         // Aplic damage catre target (hero)
         hero.getHit(fireblastDmg + igniteDmg);
         if (hero.getHp() <= 0) {    // Verific daca a facut kill
-            this.experience += Math.max(0, Constants.WIN_EXPERIENCE
+            this.expGained = Math.max(0, Constants.WIN_EXPERIENCE
                     - (this.level - hero.getLevel()) * Constants.LEVEL_DIFF_EXP_MULTIPLIER);
         }
     }
@@ -87,7 +87,7 @@ public class Pyromancer extends Hero {
         // Aplic damage catre target (hero)
         hero.getHit(fireblastDmg + igniteDmg);
         if (hero.getHp() <= 0) {    // Verific daca a facut kill
-            this.experience += Math.max(0, Constants.WIN_EXPERIENCE
+            this.expGained += Math.max(0, Constants.WIN_EXPERIENCE
                     - (this.level - hero.getLevel()) * Constants.LEVEL_DIFF_EXP_MULTIPLIER);
         }
     }
@@ -116,7 +116,7 @@ public class Pyromancer extends Hero {
         // Aplic damage catre target (hero)
         hero.getHit(fireblastDmg + igniteDmg);
         if (hero.getHp() <= 0) {    // Verific daca a facut kill
-            this.experience += Math.max(0, Constants.WIN_EXPERIENCE
+            this.expGained = Math.max(0, Constants.WIN_EXPERIENCE
                     - (this.level - hero.getLevel()) * Constants.LEVEL_DIFF_EXP_MULTIPLIER);
         }
     }
@@ -141,7 +141,7 @@ public class Pyromancer extends Hero {
         // Aplic damage catre target (hero)
         hero.getHit(fireblastDmg + igniteDmg);
         if (hero.getHp() <= 0) {    // Verific daca a facut kill
-            this.experience += Math.max(0, Constants.WIN_EXPERIENCE
+            this.expGained = Math.max(0, Constants.WIN_EXPERIENCE
                     - (this.level - hero.getLevel()) * Constants.LEVEL_DIFF_EXP_MULTIPLIER);
         }
     }

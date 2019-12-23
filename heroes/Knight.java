@@ -44,7 +44,7 @@ public class Knight extends Hero {
         if (hero.getHp() < this.executePercentage * hero.getMaxHp()) {
             // execute hero
             hero.getHit(hero.getHp());
-            this.experience += Math.max(0, Constants.WIN_EXPERIENCE
+            this.expGained = Math.max(0, Constants.WIN_EXPERIENCE
                     - (this.level - hero.getLevel()) * Constants.LEVEL_DIFF_EXP_MULTIPLIER);
             return;
         }
@@ -59,7 +59,7 @@ public class Knight extends Hero {
         // Aplic damage catre target (hero)
         hero.getHit(executeDmg + slamDmg);
         if (hero.getHp() <= 0) {    // Verific daca a facut kill
-            this.experience += Math.max(0, Constants.WIN_EXPERIENCE
+            this.expGained += Math.max(0, Constants.WIN_EXPERIENCE
                     - (this.level - hero.getLevel()) * Constants.LEVEL_DIFF_EXP_MULTIPLIER);
         }
     }
@@ -69,7 +69,7 @@ public class Knight extends Hero {
         if (hero.getHp() < this.executePercentage * hero.getMaxHp()) {
             // execute hero
             hero.getHit(hero.getHp());
-            this.experience += Math.max(0, Constants.WIN_EXPERIENCE
+            this.expGained += Math.max(0, Constants.WIN_EXPERIENCE
                     - (this.level - hero.getLevel()) * Constants.LEVEL_DIFF_EXP_MULTIPLIER);
             return;
         }
@@ -87,22 +87,25 @@ public class Knight extends Hero {
         // Aplic damage catre target (hero)
         hero.getHit(executeDmg + slamDmg);
         if (hero.getHp() <= 0) {    // Verific daca a facut kill
-            this.experience += Math.max(0, Constants.WIN_EXPERIENCE
+            this.expGained = Math.max(0, Constants.WIN_EXPERIENCE
                     - (this.level - hero.getLevel()) * Constants.LEVEL_DIFF_EXP_MULTIPLIER);
         }
     }
 
     @Override
     public final void visit(final Wizard hero, final LandType land) {
+        float landMod = this.getLandModifier(land);
+        int dmgToDeflect = Math.round(this.execute * landMod) + Math.round(this.slam * landMod);
+        // Setez damage-ul dat de erou catre wizard fara modificatorii de rasa (pentru deflect)
+        hero.setDmgToDeflect(dmgToDeflect);
         if (hero.getHp() < this.executePercentage * hero.getMaxHp()) {
             // execute hero
-            hero.setDmgToDeflect(hero.getHp());
+            //hero.setDmgToDeflect(hero.getHp());
             hero.getHit(hero.getHp());
-            this.experience += Math.max(0, Constants.WIN_EXPERIENCE
+            this.expGained = Math.max(0, Constants.WIN_EXPERIENCE
                     - (this.level - hero.getLevel()) * Constants.LEVEL_DIFF_EXP_MULTIPLIER);
             return;
         }
-        float landMod = this.getLandModifier(land);
         int executeDmg = Math.round(
                 Math.round(this.execute * (Constants.EXECUTE_APPLIED_TO_WIZ
                         + this.angelModifier + this.stratModifier))
@@ -111,15 +114,12 @@ public class Knight extends Hero {
                 Math.round(this.slam * (Constants.SLAM_APPLIED_TO_WIZ
                         + this.angelModifier + this.stratModifier))
                         * landMod);
-        int dmgToDeflect = Math.round(this.execute * landMod) + Math.round(this.slam * landMod);
-        // Setez damage-ul dat de erou catre wizard fara modificatorii de rasa (pentru deflect)
-        hero.setDmgToDeflect(dmgToDeflect);
         // Aplic root pentru o runda oponentului
         hero.debuff(0, true, 1);
         // Aplic damage catre target (hero)
         hero.getHit(executeDmg + slamDmg);
         if (hero.getHp() <= 0) {    // Verific daca a facut kill
-            this.experience += Math.max(0, Constants.WIN_EXPERIENCE
+            this.expGained = Math.max(0, Constants.WIN_EXPERIENCE
                     - (this.level - hero.getLevel()) * Constants.LEVEL_DIFF_EXP_MULTIPLIER);
         }
     }
@@ -129,7 +129,7 @@ public class Knight extends Hero {
         if (hero.getHp() < this.executePercentage * hero.getMaxHp()) {
             // execute hero
             hero.getHit(hero.getHp());
-            this.experience += Math.max(0, Constants.WIN_EXPERIENCE
+            this.expGained = Math.max(0, Constants.WIN_EXPERIENCE
                     - (this.level - hero.getLevel()) * Constants.LEVEL_DIFF_EXP_MULTIPLIER);
             return;
         }
@@ -147,7 +147,7 @@ public class Knight extends Hero {
         // Aplic damage catre target (hero)
         hero.getHit(executeDmg + slamDmg);
         if (hero.getHp() <= 0) {    // Verific daca a facut kill
-            this.experience += Math.max(0, Constants.WIN_EXPERIENCE
+            this.expGained = Math.max(0, Constants.WIN_EXPERIENCE
                     - (this.level - hero.getLevel()) * Constants.LEVEL_DIFF_EXP_MULTIPLIER);
         }
     }

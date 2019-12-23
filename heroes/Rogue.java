@@ -53,18 +53,18 @@ public class Rogue extends Hero {
         float landMod = this.getLandModifier(land);
         int backstabDmg = Math.round(Math.round(Math.round(
                 this.backstab * (Constants.BACKSTAB_APPLIED_TO_KNIGHT
-                        + this.angelModifier + this.stratModifier))
+                        + this.angelModifier + this.stratModifier) - 0.001f)
                 * landMod) * backstabCrit);
         int paralysisDmg = Math.round(Math.round(
                 this.paralysis * (Constants.PARALYSIS_APPLIED_TO_KNIGHT
-                        + this.angelModifier + this.stratModifier))
+                        + this.angelModifier + this.stratModifier) - 0.001f)
                 * landMod);
         // Aplic damage overtime si root
         hero.debuff(paralysisDmg, true, duration);
         // Aplic damage catre target (hero)
         hero.getHit(backstabDmg + paralysisDmg);
         if (hero.getHp() <= 0) {    // Verific daca a facut kill
-            this.experience += Math.max(0, Constants.WIN_EXPERIENCE
+            this.expGained = Math.max(0, Constants.WIN_EXPERIENCE
                     - (this.level - hero.getLevel()) * Constants.LEVEL_DIFF_EXP_MULTIPLIER);
         }
         backstabCount++;
@@ -94,7 +94,7 @@ public class Rogue extends Hero {
         // Aplic damage catre target (hero)
         hero.getHit(backstabDmg + paralysisDmg);
         if (hero.getHp() <= 0) {    // Verific daca a facut kill
-            this.experience += Math.max(0, Constants.WIN_EXPERIENCE
+            this.expGained = Math.max(0, Constants.WIN_EXPERIENCE
                     - (this.level - hero.getLevel()) * Constants.LEVEL_DIFF_EXP_MULTIPLIER);
         }
         backstabCount++;
@@ -119,7 +119,7 @@ public class Rogue extends Hero {
                 this.paralysis * (Constants.PARALYSIS_APPLIED_TO_WIZ
                         + this.angelModifier + this.stratModifier))
                 * landMod);
-        int dmgToDeflect = Math.round(Math.round(this.backstab * landMod) * backstabCrit)
+        int dmgToDeflect = Math.round(this.backstab * landMod * backstabCrit)
                 + Math.round(this.paralysis * landMod);
         // Setez damage-ul dat de erou catre wizard fara modificatorii de rasa (pentru deflect)
         hero.setDmgToDeflect(dmgToDeflect);
@@ -128,7 +128,7 @@ public class Rogue extends Hero {
         // Aplic damage catre target (hero)
         hero.getHit(backstabDmg + paralysisDmg);
         if (hero.getHp() <= 0) {    // Verific daca a facut kill
-            this.experience += Math.max(0, Constants.WIN_EXPERIENCE
+            this.expGained = Math.max(0, Constants.WIN_EXPERIENCE
                     - (this.level - hero.getLevel()) * Constants.LEVEL_DIFF_EXP_MULTIPLIER);
         }
         backstabCount++;
@@ -147,18 +147,18 @@ public class Rogue extends Hero {
         float landMod = this.getLandModifier(land);
         int backstabDmg = Math.round(Math.round(Math.round(
                 this.backstab * (Constants.BACKSTAB_APPLIED_TO_ROGUE
-                        + this.angelModifier + this.stratModifier))
+                        + this.angelModifier + this.stratModifier) - 0.001f)
                 * landMod) * backstabCrit);
         int paralysisDmg = Math.round(Math.round(
                 this.paralysis * (Constants.PARALYSIS_APPLIED_TO_ROGUE
-                        + this.angelModifier + this.stratModifier))
+                        + this.angelModifier + this.stratModifier) - 0.001f)
                 * landMod);
         // Aplic damage overtime si root
         hero.debuff(paralysisDmg, true, duration);
         // Aplic damage catre target (hero)
         hero.getHit(backstabDmg + paralysisDmg);
         if (hero.getHp() <= 0) {    // Verific daca a facut kill
-            this.experience += Math.max(0, Constants.WIN_EXPERIENCE
+            this.expGained = Math.max(0, Constants.WIN_EXPERIENCE
                     - (this.level - hero.getLevel()) * Constants.LEVEL_DIFF_EXP_MULTIPLIER);
         }
         backstabCount++;

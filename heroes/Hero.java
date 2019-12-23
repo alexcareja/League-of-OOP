@@ -19,6 +19,7 @@ public abstract class Hero extends Observable implements Visitor, Visitable {
     protected boolean isDead = false;
     protected int debuffDamage;
     protected boolean isRooted = false;
+    protected int expGained;
     protected int debuffDuration = 0;
     protected float angelModifier = 0;
     protected float stratModifier = 0;
@@ -84,8 +85,8 @@ public abstract class Hero extends Observable implements Visitor, Visitable {
         this.angelModifier += x;
     }
 
-    public final void setStratModifier(final float x) {
-        this.stratModifier = x;
+    public final void modStratModifier(final float x) {
+        this.stratModifier += x;
     }
 
     public final void gainExperience(final int exp) {
@@ -97,6 +98,11 @@ public abstract class Hero extends Observable implements Visitor, Visitable {
         this.experience = Constants.LEVEL_ONE_EXPERIENCE
                 + this.level * Constants.EXPERIENCE_PER_LEVEL;
         this.levelUp();
+    }
+
+    public final void addExpGained() {
+        this.experience += this.expGained;
+        this.expGained = 0;
     }
 
     public final void revive(final int heal) {

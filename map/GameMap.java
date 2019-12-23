@@ -75,6 +75,7 @@ public final class GameMap extends Observable {
     }
 
     public void moveHero(final Hero h, final char move) {
+        h.applyStrategy(this.offensiveStrategy, this.deffensiveStrategy);
         int currentPosition = playersPositions.get(h);
         switch (move) {
             case 'R':
@@ -94,21 +95,37 @@ public final class GameMap extends Observable {
         }
     }
 
-    public void fight() {
+    public void fight(final ArrayList<Hero> heroes) {
         Hero h1, h2;
         ArrayList<String> arg = new ArrayList<>();
-        for (int i = 0; i < this.n * this.m; i++) {
-            // Verific fiecare pozitie de pe harta si caut 2 eroi sa se lupte
-            h1 = null;
+        ArrayList<Hero> fought = new ArrayList<>();
+//        for (int i = 0; i < this.n * this.m; i++) {
+//            // Verific fiecare pozitie de pe harta si caut 2 eroi sa se lupte
+//            h1 = null;
+//            h2 = null;
+//            for (Hero h : playersPositions.keySet()) {
+//                if (i == playersPositions.get(h) && !h.isDead()) {
+//                    if (h1 == null) {
+//                        h1 = h;
+//                    } else {
+//                        h2 = h;
+//                        break;
+//                    }
+//                }
+//            }
+        for (Hero h : heroes) {
+            if (h.isDead()) {
+                continue;
+            }
+            h1 = h;
             h2 = null;
-            for (Hero h : playersPositions.keySet()) {
-                if (i == playersPositions.get(h) && !h.isDead()) {
-                    if (h1 == null) {
-                        h1 = h;
-                    } else {
-                        h2 = h;
-                        break;
-                    }
+            for (Hero h3 : heroes) {
+                if (h3 == h1 || h3.isDead() || fought.contains(h3)) {
+                    continue;
+                }
+                if (this.playersPositions.get(h1).equals(this.playersPositions.get(h3))) {
+                    h2 = h3;
+                    break;
                 }
             }
             if (h2 == null) {    // nu s-au gasit 2 eroi
@@ -119,16 +136,17 @@ public final class GameMap extends Observable {
                 h1 = h2;
                 h2 = h3;
             }
-            if (!h1.isRooted()) {
-                h1.applyStrategy(this.offensiveStrategy, this.deffensiveStrategy);
+            int pos = this.playersPositions.get(h1);
+            h2.accept(h1, this.map[pos / this.m][pos % this.m]);
+            h1.accept(h2, this.map[pos / this.m][pos % this.m]);
+            fought.add(h1);
+            fought.add(h2);
+            if (h1.getHp() <= 0 && h2.getHp() > 0) {
+                h2.addExpGained();
             }
-            if (!h2.isRooted()) {
-                h2.applyStrategy(this.offensiveStrategy, this.deffensiveStrategy);
+            if (h2.getHp() <= 0 && h1.getHp() > 0) {
+                h1.addExpGained();
             }
-//            h2.applyStrategy(this.offensiveStrategy, this.deffensiveStrategy);
-//            h1.applyStrategy(this.offensiveStrategy, this.deffensiveStrategy);
-            h2.accept(h1, this.map[i / this.m][i % this.m]);
-            h1.accept(h2, this.map[i / this.m][i % this.m]);
             //System.out.println(h1.getHeroType() + h1.getHp());
             //System.out.println(h2.getHeroType() + h2.getHp());
             if (h1.getId() < h2.getId()) {

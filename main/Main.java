@@ -77,7 +77,7 @@ public final class Main {
                 map.moveHero(h, move);
             }
             // Desfasurarea luptelor din runa curenta
-            map.fight();
+            map.fight(heroes);
             // Verfica daca a murit cineva si daca trebuie facut lvl up
             for (Hero h : heroes) {
                 h.checkHp();
