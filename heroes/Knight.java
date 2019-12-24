@@ -33,7 +33,8 @@ public class Knight extends Hero {
         if (this.hp < Constants.KNIGHT_LOWER_HP_BOUND * this.maxHp) {
             deff.applyStrategy(this);
         } else {
-            if (this.hp < Constants.KNIGHT_UPPER_HP_BOUND * this.maxHp) {
+            if (this.hp < Constants.KNIGHT_UPPER_HP_BOUND * this.maxHp
+                    && this.hp > Constants.KNIGHT_LOWER_HP_BOUND * this.maxHp) {
                 off.applyStrategy(this);
             }
         }
@@ -50,10 +51,8 @@ public class Knight extends Hero {
         }
         float landMod = this.getLandModifier(land);
         int executeDmg = Math.round(this.execute * landMod);
-        int slamDmg = Math.round(
-                Math.round(this.slam * (Constants.SLAM_APPLIED_TO_KNIGHT
-                        + this.angelModifier + this.stratModifier))
-                        * landMod);
+        int slamDmg = Math.round(Math.round(this.slam * landMod)
+                * (Constants.SLAM_APPLIED_TO_KNIGHT + this.angelModifier + this.stratModifier));
         // Aplic root pentru o runa oponentului
         hero.debuff(0, true, 1);
         // Aplic damage catre target (hero)
@@ -74,14 +73,10 @@ public class Knight extends Hero {
             return;
         }
         float landMod = this.getLandModifier(land);
-        int executeDmg = Math.round(
-                Math.round(this.execute * (Constants.EXECUTE_APPLIED_TO_PYRO
-                        + this.angelModifier + this.stratModifier))
-                        * landMod);
-        int slamDmg = Math.round(
-                Math.round(this.slam * (Constants.SLAM_APPLIED_TO_PYRO
-                        + this.angelModifier + this.stratModifier))
-                        * landMod);
+        int executeDmg = Math.round(Math.round(this.execute * landMod
+                * (Constants.EXECUTE_APPLIED_TO_PYRO + this.angelModifier + this.stratModifier)));
+        int slamDmg = Math.round(Math.round(this.slam * landMod)
+                * (Constants.SLAM_APPLIED_TO_PYRO + this.angelModifier + this.stratModifier));
         // Aplic root pentru o runa oponentului
         hero.debuff(0, true, 1);
         // Aplic damage catre target (hero)
@@ -106,14 +101,11 @@ public class Knight extends Hero {
                     - (this.level - hero.getLevel()) * Constants.LEVEL_DIFF_EXP_MULTIPLIER);
             return;
         }
-        int executeDmg = Math.round(
-                Math.round(this.execute * (Constants.EXECUTE_APPLIED_TO_WIZ
-                        + this.angelModifier + this.stratModifier))
-                        * landMod);
-        int slamDmg = Math.round(
-                Math.round(this.slam * (Constants.SLAM_APPLIED_TO_WIZ
-                        + this.angelModifier + this.stratModifier))
-                        * landMod);
+        int executeDmg = Math.round(Math.round(this.execute * landMod)
+                        * (Constants.EXECUTE_APPLIED_TO_WIZ + this.angelModifier
+                + this.stratModifier));
+        int slamDmg = Math.round(Math.round(this.slam * landMod)
+                *  (Constants.SLAM_APPLIED_TO_WIZ + this.angelModifier + this.stratModifier));
         // Aplic root pentru o runda oponentului
         hero.debuff(0, true, 1);
         // Aplic damage catre target (hero)
@@ -134,14 +126,11 @@ public class Knight extends Hero {
             return;
         }
         float landMod = this.getLandModifier(land);
-        int executeDmg = Math.round(
-                Math.round(this.execute * (Constants.EXECUTE_APPLIED_TO_ROGUE
-                        + this.angelModifier + this.stratModifier))
-                        * landMod);
-        int slamDmg = Math.round(
-                Math.round(this.slam * (Constants.SLAM_APPLIED_TO_ROGUE
-                        + this.angelModifier + this.stratModifier))
-                        * landMod);
+        int executeDmg = Math.round(Math.round(this.execute * landMod)
+                        * (Constants.EXECUTE_APPLIED_TO_ROGUE + this.angelModifier
+                + this.stratModifier));
+        int slamDmg = Math.round(Math.round(this.slam * landMod)
+                * (Constants.SLAM_APPLIED_TO_ROGUE + this.angelModifier + this.stratModifier));
         // Aplic root pentru o runa oponentului
         hero.debuff(0, true, 1);
         // Aplic damage catre target (hero)

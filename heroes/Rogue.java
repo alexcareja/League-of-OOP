@@ -31,7 +31,7 @@ public class Rogue extends Hero {
 
     @Override
     public final void applyStrategy(final Strategy off, final Strategy deff) {
-        if (this.hp < Constants.ROGUE_LOWER_HP_BOUND * this.maxHp) {
+        if (this.hp - 1 < Constants.ROGUE_LOWER_HP_BOUND * this.maxHp) {
             deff.applyStrategy(this);
         } else {
             if (this.hp < Constants.ROGUE_UPPER_HP_BOUND * this.maxHp) {
@@ -51,14 +51,12 @@ public class Rogue extends Hero {
             }
         }
         float landMod = this.getLandModifier(land);
-        int backstabDmg = Math.round(Math.round(Math.round(
-                this.backstab * (Constants.BACKSTAB_APPLIED_TO_KNIGHT
-                        + this.angelModifier + this.stratModifier) - 0.001f)
-                * landMod) * backstabCrit);
-        int paralysisDmg = Math.round(Math.round(
-                this.paralysis * (Constants.PARALYSIS_APPLIED_TO_KNIGHT
-                        + this.angelModifier + this.stratModifier) - 0.001f)
-                * landMod);
+        int backstabDmg = Math.round(Math.round(Math.round(this.backstab * landMod)
+                * (Constants.BACKSTAB_APPLIED_TO_KNIGHT + this.angelModifier
+                + this.stratModifier) - Constants.ZERO) * backstabCrit);
+        int paralysisDmg = Math.round(Math.round(this.paralysis * landMod)
+                * (Constants.PARALYSIS_APPLIED_TO_KNIGHT + this.angelModifier
+                + this.stratModifier) - Constants.ZERO);
         // Aplic damage overtime si root
         hero.debuff(paralysisDmg, true, duration);
         // Aplic damage catre target (hero)
@@ -81,14 +79,12 @@ public class Rogue extends Hero {
             }
         }
         float landMod = this.getLandModifier(land);
-        int backstabDmg = Math.round(Math.round(Math.round(
-                this.backstab * (Constants.BACKSTAB_APPLIED_TO_PYRO
-                        + this.angelModifier + this.stratModifier))
-                * landMod) * backstabCrit);
-        int paralysisDmg = Math.round(Math.round(
-                this.paralysis * (Constants.PARALYSIS_APPLIED_TO_PYRO
-                        + this.angelModifier + this.stratModifier))
-                * landMod);
+        int backstabDmg = Math.round(Math.round(Math.round(this.backstab * landMod)
+                * (Constants.BACKSTAB_APPLIED_TO_PYRO + this.angelModifier
+                + this.stratModifier) - Constants.ZERO) * backstabCrit);
+        int paralysisDmg = Math.round(Math.round(this.paralysis * landMod)
+                * (Constants.PARALYSIS_APPLIED_TO_PYRO + this.angelModifier
+                + this.stratModifier) - Constants.ZERO);
         // Aplic damage overtime si root
         hero.debuff(paralysisDmg, true, duration);
         // Aplic damage catre target (hero)
@@ -111,14 +107,12 @@ public class Rogue extends Hero {
             }
         }
         float landMod = this.getLandModifier(land);
-        int backstabDmg = Math.round(Math.round(Math.round(
-                this.backstab * (Constants.BACKSTAB_APPLIED_TO_WIZ
-                        + this.angelModifier + this.stratModifier))
-                * landMod) * backstabCrit);
-        int paralysisDmg = Math.round(Math.round(
-                this.paralysis * (Constants.PARALYSIS_APPLIED_TO_WIZ
-                        + this.angelModifier + this.stratModifier))
-                * landMod);
+        int backstabDmg = Math.round(Math.round(Math.round(this.backstab * landMod)
+                * (Constants.BACKSTAB_APPLIED_TO_WIZ + this.angelModifier
+                + this.stratModifier) - Constants.ZERO) * backstabCrit);
+        int paralysisDmg = Math.round(Math.round(this.paralysis * landMod)
+                * (Constants.PARALYSIS_APPLIED_TO_WIZ + this.angelModifier
+                + this.stratModifier) - Constants.ZERO);
         int dmgToDeflect = Math.round(this.backstab * landMod * backstabCrit)
                 + Math.round(this.paralysis * landMod);
         // Setez damage-ul dat de erou catre wizard fara modificatorii de rasa (pentru deflect)
@@ -145,14 +139,12 @@ public class Rogue extends Hero {
             }
         }
         float landMod = this.getLandModifier(land);
-        int backstabDmg = Math.round(Math.round(Math.round(
-                this.backstab * (Constants.BACKSTAB_APPLIED_TO_ROGUE
-                        + this.angelModifier + this.stratModifier) - 0.001f)
-                * landMod) * backstabCrit);
-        int paralysisDmg = Math.round(Math.round(
-                this.paralysis * (Constants.PARALYSIS_APPLIED_TO_ROGUE
-                        + this.angelModifier + this.stratModifier) - 0.001f)
-                * landMod);
+        int backstabDmg = Math.round(Math.round(Math.round(this.backstab * landMod)
+                * (Constants.BACKSTAB_APPLIED_TO_ROGUE + this.angelModifier
+                + this.stratModifier) - Constants.ZERO) * backstabCrit);
+        int paralysisDmg = Math.round(Math.round(this.paralysis * landMod)
+                * (Constants.PARALYSIS_APPLIED_TO_ROGUE + this.angelModifier
+                + this.stratModifier) - Constants.ZERO);
         // Aplic damage overtime si root
         hero.debuff(paralysisDmg, true, duration);
         // Aplic damage catre target (hero)

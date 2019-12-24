@@ -183,6 +183,8 @@ public final class Constants {
     public static final float WIZARD_DEFF_DMG = -0.2f;
     public static final float WIZARD_OFF_DMG = 0.6f;
 
+    public static final float ZERO = 0.001f;
+
     private Constants() {
     }
 }

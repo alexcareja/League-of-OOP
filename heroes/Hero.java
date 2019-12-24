@@ -68,6 +68,7 @@ public abstract class Hero extends Observable implements Visitor, Visitable {
         }
         this.debuffDuration--;
         this.getHit(debuffDamage);
+//        this.hp -= this.debuffDamage;
     }
 
     public final void checkHp() {

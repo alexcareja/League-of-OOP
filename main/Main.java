@@ -1,5 +1,8 @@
 package main;
 
+import strategies.DeffensiveStrategy;
+import strategies.OffensiveStrategy;
+import strategies.Strategy;
 import utils.Constants;
 import admin.GrandWizard;
 import angels.Angel;

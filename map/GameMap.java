@@ -75,7 +75,7 @@ public final class GameMap extends Observable {
     }
 
     public void moveHero(final Hero h, final char move) {
-        h.applyStrategy(this.offensiveStrategy, this.deffensiveStrategy);
+        h.applyStrategy(offensiveStrategy, deffensiveStrategy);
         int currentPosition = playersPositions.get(h);
         switch (move) {
             case 'R':
@@ -147,8 +147,6 @@ public final class GameMap extends Observable {
             if (h2.getHp() <= 0 && h1.getHp() > 0) {
                 h1.addExpGained();
             }
-            //System.out.println(h1.getHeroType() + h1.getHp());
-            //System.out.println(h2.getHeroType() + h2.getHp());
             if (h1.getId() < h2.getId()) {
                 Hero h3 = h1;
                 h1 = h2;
