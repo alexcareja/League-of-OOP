@@ -1,9 +1,11 @@
 Student: Careja Alexandru-Cristian
 Grupa: 324 CD
-Proiect - Etapa 1
+Proiect POO
 
-	Pentru implementarea jocului am creat cateva clase, grupate in pachete pentru o
-organizare mai buna a proiectului, dupa cum urmeaza:
+\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/ Etapa 1 \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
+
+	Pentru implementarea jocului am creat cateva clase, grupate in pachete 
+pentru oorganizare mai buna a proiectului, dupa cum urmeaza:
 
 >>> Pachetul main:
 	>< Clasa Main: In aceasta se realizeaza citirea din fisierul de intrare,
@@ -62,32 +64,73 @@ organizare mai buna a proiectului, dupa cum urmeaza:
 
 >>> Pachetul Utils:
 	>< Clasa Constants: contine toate constantele jocului
-	>< Clasa HeroesFactory: urmareste singleton pattern si este folositoare la
-	generarea eroilor la inceputul programului.
+	>< Clasa HeroesFactory: urmareste singleton pattern si factory pattern si
+	este folositoare la generarea eroilor la inceputul programului.
+
+<>|<> Observatii: Commiturile pe GitHub le-am facut din browser si se pot vedea
+	prin rularea comenzii "git log --stat"
 
 
-<>|<> Feedback:	-Cool tema! Singura obiectie este ca in jocuri de obicei cand ai
+<>|<> Feedback:-Cool tema! Singura obiectie este ca in jocuri de obicei cand ai
 	o pasiva care iti permite sa dai un critical o data la 3 atacuri, nu se da
-	proc incepand cu primul atac, ci cu al 3-lea.
- 		-Sper ca la etapa a 2-a sa apara mobi
+	proc incepand cu primul atac, ci cu al 3-lea incepand de la primul atac.
 
-                                \\_V_//
-                                \/=|=\/
-                                 [=v=]
-                               __\___/_____
-                              /..[  _____  ]
-                             /_  [ [  M /] ]
-                            /../.[ [ M /@] ]
-                           <-->[_[ [M /@/] ]
-                          /../ [.[ [ /@/ ] ]
-     _________________]\ /__/  [_[ [/@/ C] ]
-    <_________________>>0---]  [=\ \@/ C / /
-       ___      ___   ]/000o   /__\ \ C / /
-          \    /              /....\ \_/ /
-       ....\||/....           [___/=\___/
-      .    .  .    .          [...] [...]
-     .      ..      .         [___/ \___]
-     .    0 .. 0    .         <---> <--->
-  /\/\.    .  .    ./\/\      [..]   [..]
- / / / .../|  |\... \ \ \    _[__]   [__]_
-/ / /       \/       \ \ \  [____>   <____]
+
+\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/ Etapa 2 \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
+
+In etapa a doua am facut urmatoarele modificari:
+
+>>> Pachetul main:
+	>< Clasa Main: A ramas la fel, cu mici modificari precum citirea mutarilor
+	si a ingerilor, precum si spawnarea ingerilor si notificarea marelui vraji-
+	tor in legatura cu toate cele intamplate.
+
+>>> Pachetul map:
+	>< Clasa GameMap: Am adaugat metoda spawnAngel care primeste ca parametri
+	un inger, pozitia sa, si lista de eroi, si care aplica efectul ingerului
+	eroilor care se afla pe pozitia respectiva in runda curenta. De asemenea,
+	odata cu mutarile, in metoda moveHero, jucatorii isi aleg si strategiile
+	daca nu sunt incapacitati.
+
+>>> Pachetul heroes:
+	>< Clasa abstracta Hero: Pentru fiecare erou am adaugat un modificator de
+	inger si un modificator de strategie, care vor fi luate in calcul cand
+	eroul va da damage. Am adaugat metode pentru setarea acestor modificatori,
+	precum si metoda heal, care este folositoare cand ingerii redau o parte din
+	viata eroilor. De asemenea, clasa Hero acum extinde clasa Observable si are
+	metodele addObservers si notifyObservers, astfel incat marele vrajitor 
+	poate fi la curent cu toate cele intamplate.
+
+	<(<>)> In fiecare clasa de erou (Knight, Pyromancer, Rogue, Wizard) am
+	adaugat metoda applyStrategy in care eroul decide daca vrea sa aplice o
+	strategie anume si am modificat calculul de damage produs, adaugand la
+	modificatorul de rasa modificatorii de inger si de strategie.
+
+>>> Pachetul utils:
+	>< Clasa Constants: Am adaugat mai multe constante
+	>< Clasa AngelFactory: Urmareste singleton pattern si factory pattern si
+	este folositoare la generarea ingerilor de-a lungul jocului.
+
+>>> Pachetul admin:
+	>< Clasa GrandWizard: Reprezinta implementarea marelui vrajitor care
+	urmeaza patternul observer si atunci cand este notificat in legatura cu
+	un eveniment, se scrie in fisier ceea ce s-a intamplat.
+
+>>> Pachetul angels: 
+	<(<>)> Contine clasa abstracta angel, respectiv implementarea tuturor
+	ingerilor, urmarind patternul visitor si observer. Fiecare inger are 4
+	metode visit cu care interactioneaza cu fiecare clasa de erou, respectiv
+	doua metode care returneaza tipul ingerului respectiv actiunea realizata
+	de el (helped/hit).
+	>< Clasa abstracta Angel: Contine implementarea patternului Observer cu
+	metodele addObserver si notifyObserver si doua metode abstracte.
+
+>>> Pachetul strategies:
+	>< Interfata Strategy: Are 4 metode applyStrategy, fiecare care primeste
+	ca parametru un erou diferit.
+	>< Deffensive Strategy: Este un Singleton si este strategia care atunci
+	cand un erou scade sub un anumit nivel al HP-ului, va renunta o parte din
+	coeficienti si va primi un procent din viata maxima inapoi.
+	>< Offensive Strategy: De asemenea Singleton, si este aplicata atunci cand
+	eroul se afla cu HP-ul intre doua limite, atunci cand poate renunta la un
+	procent din HP-ul curent pentru a creste coeficientii.
