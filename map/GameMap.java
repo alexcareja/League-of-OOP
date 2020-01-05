@@ -99,20 +99,6 @@ public final class GameMap extends Observable {
         Hero h1, h2;
         ArrayList<String> arg = new ArrayList<>();
         ArrayList<Hero> fought = new ArrayList<>();
-//        for (int i = 0; i < this.n * this.m; i++) {
-//            // Verific fiecare pozitie de pe harta si caut 2 eroi sa se lupte
-//            h1 = null;
-//            h2 = null;
-//            for (Hero h : playersPositions.keySet()) {
-//                if (i == playersPositions.get(h) && !h.isDead()) {
-//                    if (h1 == null) {
-//                        h1 = h;
-//                    } else {
-//                        h2 = h;
-//                        break;
-//                    }
-//                }
-//            }
         for (Hero h : heroes) {
             if (h.isDead()) {
                 continue;

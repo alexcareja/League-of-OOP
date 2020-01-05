@@ -131,7 +131,7 @@ public class Knight extends Hero {
                 + this.stratModifier));
         int slamDmg = Math.round(Math.round(this.slam * landMod)
                 * (Constants.SLAM_APPLIED_TO_ROGUE + this.angelModifier + this.stratModifier));
-        // Aplic root pentru o runa oponentului
+        // Aplic root pentru o runda oponentului
         hero.debuff(0, true, 1);
         // Aplic damage catre target (hero)
         hero.getHit(executeDmg + slamDmg);

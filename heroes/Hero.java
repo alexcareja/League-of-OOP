@@ -24,6 +24,7 @@ public abstract class Hero extends Observable implements Visitor, Visitable {
     protected float angelModifier = 0;
     protected float stratModifier = 0;
     private ArrayList<Observer> observers = new ArrayList<>();
+    protected ArrayList<Float> angelMods = new ArrayList<>();
 
     public final int getId() {
         return this.id;
@@ -84,6 +85,7 @@ public abstract class Hero extends Observable implements Visitor, Visitable {
 
     public final void modAngelModifier(final float x) {
         this.angelModifier += x;
+        this.angelMods.add(x);
     }
 
     public final void modStratModifier(final float x) {

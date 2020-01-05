@@ -1,8 +1,5 @@
 package main;
 
-import strategies.DeffensiveStrategy;
-import strategies.OffensiveStrategy;
-import strategies.Strategy;
 import utils.Constants;
 import admin.GrandWizard;
 import angels.Angel;
@@ -86,7 +83,7 @@ public final class Main {
                 h.checkHp();
                 h.levelUp();
             }
-            // Citeste din input Ingerii pentru runda curenta
+            // Citeste din input Ingerii pentru runda curenta si spawneaza ingerii
             noAngels = fileSystem.nextInt();
             for (j = 0; j < noAngels; j++) {
                 str = fileSystem.nextWord();
@@ -103,7 +100,6 @@ public final class Main {
                 arg.clear();
                 map.spawnAngel(angel, heroes, x, y);
             }
-            fileSystem.writeNewLine();
         }
         // Scrierea in fisierul de iesire
         fileSystem.writeWord("~~ Results ~~\n");

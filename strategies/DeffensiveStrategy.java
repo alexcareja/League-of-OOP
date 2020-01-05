@@ -22,25 +22,25 @@ public final class DeffensiveStrategy implements Strategy {
 
     @Override
     public void applyStrategy(final Knight h) {
-        h.heal((int)Math.floor(h.getHp() * Constants.KNIGHT_DEFF_HEAL));
+        h.heal((int) Math.floor(h.getHp() * Constants.KNIGHT_DEFF_HEAL));
         h.modStratModifier(Constants.KNIGHT_DEFF_DMG);
     }
 
     @Override
     public void applyStrategy(final Pyromancer h) {
-        h.heal((int)Math.floor(h.getHp() * Constants.PYRO_DEFF_HEAL));
+        h.heal((int) Math.floor(h.getHp() * Constants.PYRO_DEFF_HEAL));
         h.modStratModifier(Constants.PYRO_DEFF_DMG);
     }
 
     @Override
     public void applyStrategy(final Rogue h) {
-        h.heal((int)Math.floor(h.getHp() * Constants.ROGUE_DEFF_HEAL));
+        h.heal((int) Math.floor(h.getHp() * Constants.ROGUE_DEFF_HEAL));
         h.modStratModifier(Constants.ROGUE_DEFF_DMG);
     }
 
     @Override
     public void applyStrategy(final Wizard h) {
-        h.heal((int)Math.floor(h.getHp() * Constants.WIZARD_DEFF_HEAL));
+        h.heal((int) Math.floor(h.getHp() * Constants.WIZARD_DEFF_HEAL));
         h.modStratModifier(Constants.WIZARD_DEFF_DMG);
     }
 }
