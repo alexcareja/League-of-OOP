@@ -134,3 +134,4 @@ In etapa a doua am facut urmatoarele modificari:
 	>< Offensive Strategy: De asemenea Singleton, si este aplicata atunci cand
 	eroul se afla cu HP-ul intre doua limite, atunci cand poate renunta la un
 	procent din HP-ul curent pentru a creste coeficientii.
+	
